@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineCheck } from "react-icons/ai"; // Иконка для состояния чекбокса
+import { Icons } from "../../ui/icons/Icons"; // Импортируем иконки из файла icons.ts
 
 type Props = {
   isChecked?: boolean; // состояние чекбокса
@@ -44,7 +44,7 @@ const Checkbox: React.FC<Props> = ({
         } ${checked ? "bg-green-500 border-green-500" : "bg-gray-200 border-gray-500"} p-1`}
       >
         {checked ? (
-          <AiOutlineCheck className="text-white w-4 h-4" />
+          <Icons.check className="text-white w-4 h-4" /> // Используем Icons.check
         ) : (
           <div
             className={`w-full h-full ${
@@ -60,3 +60,24 @@ const Checkbox: React.FC<Props> = ({
 };
 
 export default Checkbox;
+
+
+// Пример использования:
+
+// // Чекбокс с скругленными углами и кастомным стилем
+// <Checkbox
+//   isChecked={true}
+//   onChange={(checked) => console.log("Checked status:", checked)}
+//   rounded={true}
+//   className="border-blue-500" // Кастомный класс для обводки
+//   onClick={() => console.log("Checkbox clicked!")}
+// />
+
+// // Чекбокс с квадратными углами
+// <Checkbox
+//   isChecked={false}
+//   onChange={(checked) => console.log("Checked status:", checked)}
+//   rounded={false}
+//   className="border-red-500"
+//   onClick={() => console.log("Checkbox clicked!")}
+// />

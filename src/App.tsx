@@ -1,11 +1,12 @@
 import React from 'react'
+import Button from './components/button/button'
 
 
 function App() {
 
   return (
     <React.Fragment>
-      <h1>Hello</h1>
+      <Button variant="solid">Войти</Button>
     </React.Fragment>
   )
 }

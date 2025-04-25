@@ -13,9 +13,6 @@ function App() {
         rounded={true}
         onClick={() => console.log("Checkbox clicked!")}
       />
-      <Header className="bg-indigo-600 text-white text-lg">
-        Добро пожаловать в приложение!
-      </Header>
     </React.Fragment>
   );
 }

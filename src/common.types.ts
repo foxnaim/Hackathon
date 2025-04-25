@@ -9,3 +9,14 @@ import{ ReactNode } from "react";
   onClick?: () => void;
   className?: string;
 };
+
+
+// CheckBox
+export type CheckBoxProps = {
+  isChecked?: boolean; 
+  onChange?: (checked: boolean) => void;
+  className?: string; 
+  rounded?: boolean; 
+  onClick?: () => void;
+  children?: React.ReactNode;
+};

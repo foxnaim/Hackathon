@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { Icons } from "../../ui/icons/Icons"; // Импортируем иконки из файла icons.ts
+import { CheckBoxProps } from "../../common.types"; 
 
-type Props = {
-  isChecked?: boolean; // состояние чекбокса
-  onChange?: (checked: boolean) => void; // функция изменения состояния
-  className?: string; // дополнительный класс для стилизации
-  rounded?: boolean; // флаг для скругленных углов
-  onClick?: () => void; // обработчик клика
-  children?: React.ReactNode; // текст или элементы, переданные внутрь компонента
-};
 
-const Checkbox: React.FC<Props> = ({
+const Checkbox: React.FC<CheckBoxProps> = ({
   isChecked = false,
   onChange,
   className = "",
@@ -20,14 +13,12 @@ const Checkbox: React.FC<Props> = ({
 }) => {
   const [checked, setChecked] = useState(isChecked);
 
-  // Функция для переключения состояния чекбокса
   const handleChange = () => {
     const newChecked = !checked;
     setChecked(newChecked);
     if (onChange) onChange(newChecked);
   };
 
-  // Обработка клика (если передан onClick)
   const handleClick = () => {
     if (onClick) onClick();
     handleChange();
@@ -44,7 +35,7 @@ const Checkbox: React.FC<Props> = ({
         } ${checked ? "bg-green-500 border-green-500" : "bg-gray-200 border-gray-500"} p-1`}
       >
         {checked ? (
-          <Icons.check className="text-white w-4 h-4" /> // Используем Icons.check
+          <Icons.check className="text-white w-4 h-4" />
         ) : (
           <div
             className={`w-full h-full ${

@@ -1,6 +1,7 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ButtonProps } from "../../common.types";
-import { Icons } from "../../ui/icons/Icons"; // путь укажи правильно
+import { Icons } from "../../ui/icons/Icons";
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -25,17 +26,41 @@ const Button: React.FC<ButtonProps> = ({
   const SpinnerIcon = Icons.spinner;
 
   return (
-    <button
+    <motion.button
+      whileTap={{ scale: 0.96 }}
       className={`${baseStyles} ${variants[variant]} ${className}`}
       onClick={onClick}
       disabled={disabled || isLoading}
     >
-      {isLoading ? <SpinnerIcon className="animate-spin w-5 h-5" /> : children}
-    </button>
+      <AnimatePresence initial={false} mode="wait">
+        {isLoading ? (
+          <motion.div
+            key="spinner"
+            initial={{ opacity: 0, rotate: -90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SpinnerIcon className="animate-spin w-5 h-5" />
+          </motion.div>
+        ) : (
+          <motion.span
+            key="children"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+          >
+            {children}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.button>
   );
 };
 
 export default Button;
+
 
 // Пример использования:
 // <Button variant="solid">Войти</Button>                     // Стандартный вариант

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Icons } from "../../ui/icons/Icons"; // Импортируем иконки из файла icons.ts
-import { CheckBoxProps } from "../../common.types"; 
-
+import { motion, AnimatePresence } from "framer-motion";
+import { Icons } from "../../ui/icons/Icons"; 
+import { CheckBoxProps } from "../../common.types";
 
 const Checkbox: React.FC<CheckBoxProps> = ({
   isChecked = false,
@@ -29,22 +29,31 @@ const Checkbox: React.FC<CheckBoxProps> = ({
       className={`flex items-center cursor-pointer ${className}`}
       onClick={handleClick}
     >
-      <div
+      <motion.div
+        initial={false}
+        animate={{
+          backgroundColor: checked ? "#22c55e" : "#e5e7eb", // green-500 / gray-200
+          borderColor: checked ? "#22c55e" : "#6b7280",     // green-500 / gray-500
+        }}
+        transition={{ duration: 0.2 }}
         className={`w-6 h-6 flex items-center justify-center border-2 ${
           rounded ? "rounded-full" : "rounded-none"
-        } ${checked ? "bg-green-500 border-green-500" : "bg-gray-200 border-gray-500"} p-1`}
+        } p-1`}
       >
-        {checked ? (
-          <Icons.check className="text-white w-4 h-4" />
-        ) : (
-          <div
-            className={`w-full h-full ${
-              rounded ? "rounded-full" : "rounded-none"
-            } bg-transparent`}
-          />
-        )}
-      </div>
-      {/* Отображение переданного текста */}
+        <AnimatePresence>
+          {checked && (
+            <motion.div
+              key="check"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Icons.check className="text-white w-4 h-4" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
       <span className="ml-2">{children}</span>
     </div>
   );

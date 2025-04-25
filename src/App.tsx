@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./components/button/button";
 import Checkbox from "./components/checkbox/checkbox";
-import { Header } from "./components/header/header";
+
 
 function App() {
   return (

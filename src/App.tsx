@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./components/button/button";
 import Checkbox from "./components/checkbox/checkbox";
+import Input from "./components/imput/input";
 
 
 function App() {
@@ -13,6 +14,11 @@ function App() {
         rounded={true}
         onClick={() => console.log("Checkbox clicked!")}
       />
+  <Input placeholder="Введите email" icon="email" />
+<Input placeholder="Введите пароль" type="password" icon="password" />
+<Input placeholder="Введите имя" icon="user" />
+<Input placeholder="Поиск..." icon="search" />
+
     </React.Fragment>
   );
 }

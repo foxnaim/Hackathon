@@ -1,9 +1,72 @@
-import React from 'react'
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FiMail, FiLock, FiUser, FiPhone, FiSearch } from "react-icons/fi";
 
-type Props = {}
+type InputProps = {
+  placeholder?: string;
+  disabled?: boolean;
+  type?: string;
+  icon?: "email" | "password" | "user" | "phone" | "search";
+  className?: string;
+};
 
-export const Input = (props: Props) => {
+const iconMap = {
+  email: FiMail,
+  password: FiLock,
+  user: FiUser,
+  phone: FiPhone,
+  search: FiSearch,
+};
+
+export const Input: React.FC<InputProps> = ({
+  placeholder = "Введите текст...",
+  disabled = false,
+  type = "text",
+  icon,
+  className = "",
+}) => {
+  const IconComponent = icon ? iconMap[icon] : null;
+  const [inputValue, setInputValue] = useState("");
+
   return (
-    <div>input</div>
-  )
-}
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="w-full"
+    >
+      <motion.div
+        tabIndex={-1}
+        whileFocus={{ scale: 1.02 }}
+        whileTap={{ scale: 0.99 }}
+        className="relative w-full"
+      >
+        {IconComponent && (
+          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <IconComponent className="text-gray-400 w-5 h-5" />
+          </div>
+        )}
+        <input
+          type={type}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          disabled={disabled}
+          placeholder={placeholder}
+          className={`w-full border-2 border-gray-300 rounded-full px-4 text-gray-900 ${
+            IconComponent ? "pl-12" : "pl-4"
+          } py-3 text-sm outline-none focus:border-indigo-500 transition ${className}`}
+        />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default Input;
+
+
+
+ // пример использования 
+//  <Input placeholder="Введите email" icon="email" />
+// <Input placeholder="Введите пароль" type="password" icon="password" />
+// <Input placeholder="Введите имя" icon="user" />
+// <Input placeholder="Поиск..." icon="search" />

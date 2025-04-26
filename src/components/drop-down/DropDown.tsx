@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ItemDrop, titleDropDown } from './ItemDrop'; 
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-type Props = {}
 
-const DropDown = (props: Props) => {
+const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);

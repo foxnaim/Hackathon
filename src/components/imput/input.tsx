@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiMail, FiLock, FiUser, FiPhone, FiSearch } from "react-icons/fi";
+import {Icons} from "../../ui/icons/Icons";
+import {InputProps} from "../../common.types";
 
-type InputProps = {
-  placeholder?: string;
-  disabled?: boolean;
-  type?: string;
-  icon?: "email" | "password" | "user" | "phone" | "search";
-  className?: string;
-};
 
 const iconMap = {
-  email: FiMail,
-  password: FiLock,
-  user: FiUser,
-  phone: FiPhone,
-  search: FiSearch,
+  email: Icons.email,
+  password: Icons.password,
+  user: Icons.user,
+  phone: Icons.phone,
+  search: Icons.search,
 };
 
 export const Input: React.FC<InputProps> = ({

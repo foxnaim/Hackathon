@@ -22,4 +22,12 @@ export type CheckBoxProps = {
 };
 
 
-//
+//Input
+
+export type InputProps = {
+  placeholder?: string;
+  disabled?: boolean;
+  type?: string;
+  icon?: "email" | "password" | "user" | "phone" | "search";
+  className?: string;
+};

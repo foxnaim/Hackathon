@@ -1,14 +1,8 @@
-import React from "react";
+import React from 'react'
 
-type Props = {
-  children?: React.ReactNode;
-  className?: string;
-} & React.HTMLAttributes<HTMLElement>; 
-
-export const Header: React.FC<Props> = ({ children, className = "", ...rest }) => {
+export default function header() {
   return (
-    <header className={`w-full p-4 ${className}`} {...rest}>
-      {children}
-    </header>
-  );
-};
+    <div>header</div>
+  )
+}
+

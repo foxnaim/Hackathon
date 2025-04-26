@@ -23,7 +23,6 @@ export type CheckBoxProps = {
 
 
 //Input
-
 export type InputProps = {
   placeholder?: string;
   disabled?: boolean;
@@ -31,3 +30,10 @@ export type InputProps = {
   icon?: "email" | "password" | "user" | "phone" | "search";
   className?: string;
 };
+
+
+//Header
+export interface MenuItemProps {
+  name: string;
+  link: string;
+}

@@ -1,26 +1,34 @@
-import React from "react";
-import Button from "./components/button/button";
-import Checkbox from "./components/checkbox/checkbox";
-import Input from "./components/imput/input";
-
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { Loading } from "./components/loading/Loading"; 
+import Home from "./pages/home/Home";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
-  return (
-    <React.Fragment>
-      <Button isLoading>Войти</Button>
-      <Checkbox
-        isChecked={true}
-        onChange={(checked) => console.log("Checked status:", checked)}
-        rounded={true}
-        onClick={() => console.log("Checkbox clicked!")}
-      />
-  <Input placeholder="Введите email" icon="email" />
-<Input placeholder="Введите пароль" type="password" icon="password" />
-<Input placeholder="Введите имя" icon="user" />
-<Input placeholder="Поиск..." icon="search" />
+  const [isLoading, setIsLoading] = useState(true);
 
-    </React.Fragment>
+  useEffect(() => {
+    // Симуляция загрузки (например, 2 секунды)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+      )}
+    </>
   );
 }
 
 export default App;
+

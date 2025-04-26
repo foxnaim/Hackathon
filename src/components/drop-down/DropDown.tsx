@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ItemDrop, titleDropDown } from './ItemDrop'; 
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { Icons } from '../../ui/icons/Icons';
 
 
 const DropDown = () => {
@@ -28,7 +28,7 @@ const DropDown = () => {
           className="w-full border-2 border-gray-300 rounded-full px-4 py-3 text-gray-900 text-sm outline-none focus:border-indigo-500 transition flex items-center justify-between"
         >
           <span>{titleDropDown}</span>
-          {isOpen ? <FiChevronUp className="w-5 h-5 ml-2 text-gray-400" /> : <FiChevronDown className="w-5 h-5 ml-2 text-gray-400" />}
+          {isOpen ? <Icons.chevronUp className="w-5 h-5 ml-2 text-gray-400" /> : <Icons.chevronDown className="w-5 h-5 ml-2 text-gray-400" />}
         </button>
 
         <AnimatePresence>

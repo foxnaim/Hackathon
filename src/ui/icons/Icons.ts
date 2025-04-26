@@ -1,8 +1,7 @@
 // icons.ts
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { AiOutlineCheck } from "react-icons/ai"; 
-import { FiMail, FiLock, FiUser, FiPhone, FiSearch } from "react-icons/fi";
-
+import { FiMail, FiLock, FiUser, FiPhone, FiSearch, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 
 export const Icons = {
@@ -13,4 +12,6 @@ export const Icons = {
   user: FiUser,
   phone: FiPhone,
   search: FiSearch,
+  chevronDown: FiChevronDown,
+  chevronUp: FiChevronUp,
 };

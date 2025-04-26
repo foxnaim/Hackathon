@@ -1,9 +1,7 @@
-import React from "react";
 import { motion } from "framer-motion";
 
-type Props = {};
 
-export const Loading = (props: Props) => {
+export const Loading = () => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
       <motion.div
@@ -12,7 +10,6 @@ export const Loading = (props: Props) => {
         transition={{ duration: 0.5 }}
         className="flex items-center justify-center space-x-2"
       >
-        {/* Круглая анимация загрузки */}
         <div className="w-8 h-8 border-t-4 border-white border-solid rounded-full animate-spin"></div>
         <span className="text-white text-lg">Загрузка...</span>
       </motion.div>

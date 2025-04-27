@@ -6,7 +6,6 @@ import DropDown from '../../components/drop-down/DropDown';
 import Header from '../../components/header/Header';
 import Chbox from '../../components/CustomCheckbox/ChBox';
 import { Icons } from '../../ui/icons/Icons';
-import { FiAirplay } from 'react-icons/fi';
 
 
 const Home = () => {
@@ -16,13 +15,13 @@ const Home = () => {
     <div className='container mx-auto flex flex-col gap-4'>
       <div>Главная страница</div>
       <Button isLoading>Войти</Button>
-      <Button icon={<FiAirplay/>}>Войти</Button>
-        {/* <Checkbox
+      <Button icon={<Icons.airplay/>}>Войти</Button>
+        <Checkbox
           isChecked={true}
           onChange={(checked) => console.log("Checked status:", checked)}
           rounded={true}
           onClick={() => console.log("Checkbox clicked!")}
-        /> */}
+        />
         <Chbox
           isChecked={true}
           onChange={(checked) => console.log("Checked status:", checked)}

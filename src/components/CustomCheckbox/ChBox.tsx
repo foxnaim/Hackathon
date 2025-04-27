@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Icons } from "../../ui/icons/Icons"; 
-import { ChBoxProps, CheckBoxProps } from "../../common.types";
+import { CheckBoxProps } from "../../common.types";
 
 const Chbox: React.FC<CheckBoxProps> = ({
   isChecked = false,

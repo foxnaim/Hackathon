@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "../../ui/icons/Icons"; 
-import { CheckBoxProps } from "../../common.types";
+import { ChBoxProps, CheckBoxProps } from "../../common.types";
 
-const Checkbox: React.FC<CheckBoxProps> = ({
+const Chbox: React.FC<CheckBoxProps> = ({
   isChecked = false,
   onChange,
   className = "",
@@ -32,11 +32,11 @@ const Checkbox: React.FC<CheckBoxProps> = ({
       <motion.div
         initial={false}
         animate={{
-          backgroundColor: checked ? "#6366f1" : "#e5e7eb", // indigo-500 / gray-200
-          borderColor: checked ? "#6366f1" : "#6b7280",     // indigo-500 / gray-500
+          backgroundColor: "#e5e7eb", // indigo-500 / gray-200
+          borderColor: "#6366f1"    // indigo-500 / gray-500
         }}
         transition={{ duration: 0.2 }}
-        className={`w-6 h-6 flex items-center justify-center border-[2.5px] ${
+        className={`w-6 h-6 flex items-center justify-center border-[2px] ${
           rounded ? "rounded-full" : "rounded-none"
         } p-1`}
       >
@@ -49,7 +49,8 @@ const Checkbox: React.FC<CheckBoxProps> = ({
               exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <Icons.check className="text-white w-4 h-4" />
+              <div className="border-gray-200 size-[18px] bg-indigo-500 rounded-full border-2"></div>
+              {/* <Icons.check className="text-white w-4 h-4" /> */}
             </motion.div>
           )}
         </AnimatePresence>
@@ -59,7 +60,7 @@ const Checkbox: React.FC<CheckBoxProps> = ({
   );
 };
 
-export default Checkbox;
+export default Chbox;
 
 
 // Пример использования:

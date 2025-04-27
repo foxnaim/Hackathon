@@ -25,7 +25,7 @@ const DropDown = () => {
         <button
           type="button"
           onClick={toggleDropdown}
-          className="w-full border-2 border-gray-300 rounded-full px-4 py-3 text-gray-900 text-sm outline-none focus:border-indigo-500 transition flex items-center justify-between"
+          className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm outline-none focus:border-indigo-500 transition flex items-center justify-between"
         >
           <span>{titleDropDown}</span>
           {isOpen ? <Icons.chevronUp className="w-5 h-5 ml-2 text-gray-400" /> : <Icons.chevronDown className="w-5 h-5 ml-2 text-gray-400" />}
@@ -36,7 +36,7 @@ const DropDown = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              exit={{ opacity: 0, y: -10 }} 
               transition={{ duration: 0.2 }}
               className="absolute z-10 mt-2 w-full bg-white border-2 border-gray-300 rounded-lg shadow-md overflow-hidden"
             >

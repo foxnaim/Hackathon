@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 export const Loading = () => {
@@ -10,7 +11,8 @@ export const Loading = () => {
         transition={{ duration: 0.5 }}
         className="flex items-center justify-center space-x-2"
       >
-        <div className="w-8 h-8 border-t-4 border-white border-solid rounded-full animate-spin"></div>
+        <AiOutlineLoading3Quarters className="size-8 animate-spin text-white"/>
+        {/* <div className="w-8 h-8 border-t-4 border-white border-solid rounded-full animate-spin"></div> */}
         <span className="text-white text-lg">Загрузка...</span>
       </motion.div>
     </div>

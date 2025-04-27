@@ -46,9 +46,9 @@ export const Input: React.FC<InputProps> = ({
           onChange={(e) => setInputValue(e.target.value)}
           disabled={disabled}
           placeholder={placeholder}
-          className={`w-full border-2 border-gray-300 rounded-full px-4 text-gray-900 ${
+          className={`w-full border-2 border-gray-300 rounded-lg px-4 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-0 ${
             IconComponent ? "pl-12" : "pl-4"
-          } py-3 text-sm outline-none focus:border-indigo-500 transition ${className}`}
+          } py-3 text-sm outline-none  transition ${className}`}
         />
       </motion.div>
     </motion.div>

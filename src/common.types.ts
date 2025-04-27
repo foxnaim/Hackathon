@@ -8,6 +8,7 @@ import{ ReactNode } from "react";
   disabled?: boolean;
   onClick?: () => void;
   className?: string;
+  icon?: ReactNode | string;
 };
 
 
@@ -18,8 +19,18 @@ export type CheckBoxProps = {
   className?: string; 
   rounded?: boolean; 
   onClick?: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
+
+export type ChBoxProps = {
+  isChecked?: boolean; 
+  onChange?: (checked: boolean) => void;
+  className?: string; 
+  rounded?: boolean; 
+  onClick?: () => void;
+  children?: ReactNode;
+};
+
 
 
 //Input

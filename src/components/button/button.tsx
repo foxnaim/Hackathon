@@ -10,9 +10,10 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   onClick,
   className = "",
+  icon
 }) => {
   const baseStyles =
-    "w-full flex justify-center items-center gap-2 rounded-full px-6 py-3 font-semibold transition-all";
+    "w-full flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
 
   const variants: Record<string, string> = {
     solid:
@@ -44,15 +45,19 @@ const Button: React.FC<ButtonProps> = ({
             <SpinnerIcon className="animate-spin w-5 h-5" />
           </motion.div>
         ) : (
+          <>
           <motion.span
             key="children"
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2 }}
+            className="flex justify-center items-center gap-1.5"
           >
+            <span>{icon}</span>
             {children}
           </motion.span>
+          </>
         )}
       </AnimatePresence>
     </motion.button>

@@ -2,7 +2,7 @@
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { AiOutlineCheck } from "react-icons/ai"; 
 import { FiMail, FiLock, FiUser, FiPhone, FiSearch, FiChevronDown, FiChevronUp, FiAirplay } from "react-icons/fi";
-import { LuSend } from "react-icons/lu";
+import { LuSendHorizontal } from "react-icons/lu";
 
 export const Icons = {
   spinner: AiOutlineLoading3Quarters,
@@ -15,5 +15,5 @@ export const Icons = {
   chevronDown: FiChevronDown,
   chevronUp: FiChevronUp,
   airplay: FiAirplay,
-  send: LuSend,
+  send: LuSendHorizontal,
 };

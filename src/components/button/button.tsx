@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants: Record<string, string> = {
     solid:
-      "bg-primary text-white hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed",
+      "bg-primary text-white hover:bg-indigo-700  disabled:text-gray-500 disabled:cursor-not-allowed",
     outline:
       "border-2 border-primary text-primary hover:bg-indigo-50 disabled:border-gray-300 disabled:text-gray-400",
     ghost:

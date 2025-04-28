@@ -37,7 +37,7 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
       >
         {IconComponent && (
           <div className="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <IconComponent className="text-gray-400 w-5 h-5" />
+            <IconComponent className="text-text w-5 h-5" /> {/* Иконка останется с оригинальным цветом */}
           </div>
         )}
         <input
@@ -46,9 +46,10 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
           onChange={onChange}
           disabled={disabled}
           placeholder={placeholder}
-          className={`w-full border-2 border-gray-300 rounded-lg px-4 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-0 ${
+          className={`w-full border-2 border-gray-300 rounded-lg px-4 text-black focus:ring-2 focus:ring-primary focus:border-0 ${
             IconComponent ? "pl-12" : "pl-4"
-          } py-3 text-sm outline-none  transition ${className}`}
+          } py-3 text-base outline-none transition ${className}`} 
+          // Заменили text-text на text-black для черного текста
         />
       </motion.div>
     </motion.div>
@@ -56,10 +57,3 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
 };
 
 export default Input;
-
-
- // пример использования 
-//  <Input placeholder="Введите email" icon="email" />
-// <Input placeholder="Введите пароль" type="password" icon="password" />
-// <Input placeholder="Введите имя" icon="user" />
-// <Input placeholder="Поиск..." icon="search" />

@@ -20,15 +20,15 @@ const MessageInput: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-background">
-      <div className="flex items-center space-x-4">
+    <div className="flex items-center justify-center p-8">
+      <div className="flex items-center space-x-4 w-full max-w-xl">
         <Input
           type="text"
           placeholder="Введите сообщение..."
           icon="search" 
           value={message}
           onChange={(e) => setMessage(e.target.value)} 
-          className="flex-1"
+          className="flex-1 h-12 px-4 border rounded-lg text-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary"
         />
         <Button
           onClick={sendMessage}

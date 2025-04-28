@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     <div className='w-full h-auto'>
       <div className='w-2/3 mx-auto py-8 flex justify-between items-center'>
         <motion.h2 
-          className='text-[2vw] font-bold'
+          className='text-primary text-[2vw] font-bold' // Используем color из Tailwind
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}

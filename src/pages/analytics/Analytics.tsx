@@ -1,8 +1,6 @@
 
 
-type Props = {}
-
-const Analytics = (props: Props) => {
+const Analytics = () => {
   return (
     <div>Analytics</div>
   )

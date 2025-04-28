@@ -31,7 +31,7 @@ const MessageInput: React.FC = () => {
   return (
     <div className="flex items-end justify-center max-h-screen p-4">
       {/* Поле для ввода сообщения */}
-      <div className="flex flex-col items-center space-y-3 p-4 bg-gray-50 rounded-xl shadow-md  w-full">
+      <div className="flex flex-col items-center space-y-3 pb-4 bg-gray-300 rounded-xl shadow-md w-full p-2">
         <div className="flex items-center space-x-3 w-full">
           <textarea
             ref={textareaRef}
@@ -41,16 +41,16 @@ const MessageInput: React.FC = () => {
               setMessage(e.target.value);
               handleInput(); // Вызываем обработчик при изменении текста
             }} 
-            className="flex-1 max-h-26 w-full px-4 text-sm p-4 bg-gray-50 text-background rounded-md resize-none focus:outline-none overflow-hidden"
+            className="flex-1 max-h-26 w-full px-4 text-sm p-4 bg-gray-300 text-background rounded-md resize-none focus:outline-none overflow-hidden"
             style={{ minHeight: "8rem" }} // Устанавливаем минимальную высоту
           />
           <Button
             onClick={sendMessage}
             isLoading={isLoading}
             disabled={isLoading || !message.trim()} 
-            className="bg-gray-50 hover:bg-gray-50  w-11 px-3 py-2 rounded-md flex items-center"
+            className="bg-gray-300 hover:bg-gray-300 w-11 px-3 py-2 rounded-md flex items-center"
           >
-            <Icons.send className="w-8 h-8 text-primary"/>
+            <Icons.send className="w-8 h-8 text-black"/>
           </Button>
         </div>
       </div>

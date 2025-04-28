@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ButtonProps } from "../../common.types";
 import { Icons } from "../../ui/icons/Icons";
 
+
+
 const Button: React.FC<ButtonProps> = ({
   children,
   variant = "solid",
@@ -29,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <motion.button
       whileTap={{ scale: 0.96 }}
-      className={`${baseStyles} ${variants[variant]}  ${className}`} // Используем text-size прямо
+      className={`${baseStyles} ${variants[variant]} ${className}`} // Используем text-size прямо
       onClick={onClick}
       disabled={disabled || isLoading}
     >
@@ -63,9 +65,7 @@ const Button: React.FC<ButtonProps> = ({
     </motion.button>
   );
 };
-
 export default Button;
-
 
 // Пример использования:
 // <Button variant="solid">Войти</Button>                     // Стандартный вариант

@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <SpinnerIcon className="animate-spin w-5 h-5" />
+            <SpinnerIcon className="animate-spin w-8 h-8" />
           </motion.div>
         ) : (
           <>

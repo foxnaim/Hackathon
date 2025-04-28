@@ -3,15 +3,14 @@ import Button from "../button/button";
 import { Icons } from "../../ui/icons/Icons";
 
 const MessageInput: React.FC = () => {
-  const [message, setMessage] = useState<string>(""); // Текстовое состояние
-  const [isLoading, setIsLoading] = useState<boolean>(false); // Индикация загрузки
-  const textareaRef = useRef<HTMLTextAreaElement>(null); // Ссылка на textarea
+  const [message, setMessage] = useState<string>(""); 
+  const [isLoading, setIsLoading] = useState<boolean>(false); 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Функция для автоматического расширения textarea
   const handleInput = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Сбрасываем высоту
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Устанавливаем высоту в зависимости от контента
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
 
@@ -20,37 +19,46 @@ const MessageInput: React.FC = () => {
       setIsLoading(true);
       console.log("Message Sent:", message);
 
-      // Эмулируем отправку сообщения
       setTimeout(() => {
         setIsLoading(false);
-        setMessage(""); // Очищаем текстовое поле
-      }, 2000); 
+        setMessage(""); 
+      }, 2000);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // Чтобы не было переноса строки
+      sendMessage();
     }
   };
 
   return (
     <div className="flex items-end justify-center max-h-screen p-4">
-      {/* Поле для ввода сообщения */}
-      <div className="flex flex-col items-center space-y-3 pb-4 bg-gray-300 rounded-xl shadow-2xl shadow-green-950 w-full p-2">
-        <div className="flex items-center space-x-3 w-full">
+      <div className="flex flex-col items-center space-y-3 pb-4 bg-gray-300 rounded-xl shadow-2xl w-full p-2">
+        <div className="flex w-full space-x-3">
           <textarea
             ref={textareaRef}
-            placeholder="Спросите что-нибудь..." 
+            placeholder="Спросите что-нибудь..."
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);
-              handleInput(); // Вызываем обработчик при изменении текста
-            }} 
-            className="flex-1 h-[100px]  w-full px-4 text-sm p-4 bg-gray-300 text-background rounded-md resize-none focus:outline-none overflow-hidden"
+              handleInput();
+            }}
+            onKeyDown={handleKeyDown}
+            className="flex-1 w-full px-4 text-sm p-4 bg-gray-300 text-background rounded-md resize-none focus:outline-none overflow-y-auto"
+            style={{ minHeight: "100px", maxHeight: "150px" }}
           />
-          <Button
-            onClick={sendMessage}
-            isLoading={isLoading}
-            disabled={isLoading || !message.trim()} 
-            className="bg-gray-300 hover:bg-gray-300 w-16  p-10 rounded-md "
-          >
-            <Icons.send className="w-8 h-8 text-black "/>
-          </Button>
+          <div className="flex flex-col">
+            <Button
+              onClick={sendMessage}
+              isLoading={isLoading}
+              disabled={isLoading || !message.trim()}
+              className="bg-gray-300 hover:bg-gray-300 p-3 rounded-md "
+            >
+              <Icons.send className="w-8 h-8 text-black mt-1" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

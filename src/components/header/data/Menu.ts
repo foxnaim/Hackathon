@@ -1,3 +1,3 @@
 export const ItemMenu = [
- { "title": "Home", "link": "/" },
+ { "title": "Войти", "link": "/login" },
 ];

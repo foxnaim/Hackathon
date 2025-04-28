@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import {Icons} from "../../ui/icons/Icons";
-import {InputProps} from "../../common.types";
-
+import { Icons } from "../../ui/icons/Icons";
+import { InputProps } from "../../common.types";
 
 const iconMap = {
   email: Icons.email,
@@ -12,15 +11,16 @@ const iconMap = {
   search: Icons.search,
 };
 
-export const Input: React.FC<InputProps> = ({
+export const Input: React.FC<InputProps & { value: string; onChange: React.ChangeEventHandler<HTMLInputElement> }> = ({
   placeholder = "Введите текст...",
   disabled = false,
   type = "text",
   icon,
   className = "",
+  value,
+  onChange,
 }) => {
   const IconComponent = icon ? iconMap[icon] : null;
-  const [inputValue, setInputValue] = useState("");
 
   return (
     <motion.div
@@ -42,8 +42,8 @@ export const Input: React.FC<InputProps> = ({
         )}
         <input
           type={type}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={value}
+          onChange={onChange}
           disabled={disabled}
           placeholder={placeholder}
           className={`w-full border-2 border-gray-300 rounded-lg px-4 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-0 ${
@@ -56,7 +56,6 @@ export const Input: React.FC<InputProps> = ({
 };
 
 export default Input;
-
 
 
  // пример использования 

@@ -1,0 +1,26 @@
+import React from 'react';
+import Message from './Message';
+
+type MessageType = {
+  id: number;
+  text: string;
+  sender: 'user' | 'bot';
+};
+
+const messages: MessageType[] = [
+  { id: 1, text: "Hello! How can I help you?", sender: "bot" },
+  { id: 2, text: "I'm looking for information on AI trends.", sender: "user" },
+  { id: 3, text: "Sure! Here are some articles...", sender: "bot" },
+];
+
+const MessageList: React.FC = () => {
+  return (
+    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {messages.map((message) => (
+        <Message key={message.id} message={message} />
+      ))}
+    </div>
+  );
+};
+
+export default MessageList;

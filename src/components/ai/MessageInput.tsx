@@ -34,7 +34,7 @@ const MessageInput: React.FC = () => {
           isLoading={isLoading} 
           disabled={isLoading || !message.trim()} // Отключаем кнопку, если нет текста или в процессе отправки
           variant="solid"
-          className="flex-shrink-0 w-28">
+          className="flex-shrink-0 w-28 bg-secondary hover:bg-secondary/80 text-white">
           Отправить
         </Button>
       </div>

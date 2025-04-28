@@ -10,18 +10,18 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   onClick,
   className = "",
-  icon
+  icon,
 }) => {
   const baseStyles =
     "w-full flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
 
   const variants: Record<string, string> = {
     solid:
-      "bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed",
+      "bg-primary text-white hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed",
     outline:
-      "border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 disabled:border-gray-300 disabled:text-gray-400",
+      "border-2 border-primary text-primary hover:bg-indigo-50 disabled:border-gray-300 disabled:text-gray-400",
     ghost:
-      "text-indigo-600 hover:bg-indigo-50 disabled:text-gray-400 disabled:bg-transparent",
+      "text-primary hover:bg-indigo-50 disabled:text-gray-400 disabled:bg-transparent",
   };
 
   const SpinnerIcon = Icons.spinner;
@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <motion.button
       whileTap={{ scale: 0.96 }}
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      className={`${baseStyles} ${variants[variant]}  ${className}`} // Используем text-size прямо
       onClick={onClick}
       disabled={disabled || isLoading}
     >
@@ -46,17 +46,17 @@ const Button: React.FC<ButtonProps> = ({
           </motion.div>
         ) : (
           <>
-          <motion.span
-            key="children"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2 }}
-            className="flex justify-center items-center gap-1.5"
-          >
-            <span>{icon}</span>
-            {children}
-          </motion.span>
+            <motion.span
+              key="children"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="flex justify-center items-center gap-1.5"
+            >
+              <span>{icon}</span>
+              {children}
+            </motion.span>
           </>
         )}
       </AnimatePresence>

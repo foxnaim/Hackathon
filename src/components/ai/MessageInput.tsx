@@ -31,7 +31,7 @@ const MessageInput: React.FC = () => {
   return (
     <div className="flex items-end justify-center max-h-screen p-4">
       {/* Поле для ввода сообщения */}
-      <div className="flex flex-col items-center space-y-3 p-4 bg-gray-50 rounded-xl shadow-md max-w-xl w-full">
+      <div className="flex flex-col items-center space-y-3 p-4 bg-gray-50 rounded-xl shadow-md  w-full">
         <div className="flex items-center space-x-3 w-full">
           <textarea
             ref={textareaRef}

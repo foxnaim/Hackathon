@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ItemDrop, titleDropDown } from './ItemDrop'; 
 import { Icons } from '../../ui/icons/Icons';
 
-
 const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +24,7 @@ const DropDown = () => {
         <button
           type="button"
           onClick={toggleDropdown}
-          className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm outline-none focus:border-indigo-500 transition flex items-center justify-between"
+          className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-gray-900 text-sm outline-none focus:border-primary transition flex items-center justify-between"
         >
           <span>{titleDropDown}</span>
           {isOpen ? <Icons.chevronUp className="w-5 h-5 ml-2 text-gray-400" /> : <Icons.chevronDown className="w-5 h-5 ml-2 text-gray-400" />}

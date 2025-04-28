@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input from "../input/input"; 
 import Button from "../button/button"; 
+import { Icons } from "../../ui/icons/Icons";  // Импортируем иконки
 
 const MessageInput: React.FC = () => {
   const [message, setMessage] = useState<string>("");
@@ -34,8 +35,9 @@ const MessageInput: React.FC = () => {
           isLoading={isLoading} 
           disabled={isLoading || !message.trim()} // Отключаем кнопку, если нет текста или в процессе отправки
           variant="solid"
-          className="flex-shrink-0 w-28 bg-secondary hover:bg-secondary/80 text-white">
-          Отправить
+          className="flex-shrink-0 w-32 bg-secondary hover:bg-secondary/80 text-white">
+          Отправить 
+          <Icons.send className="w-5 h-5 rotate-45" /> 
         </Button>
       </div>
     </div>

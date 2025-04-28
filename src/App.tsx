@@ -18,14 +18,14 @@ function App() {
 
   return (  
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Loading />
-      ) : (
+      ) : ( */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-      )}
+      {/* )} */}
     </>
   );
 }

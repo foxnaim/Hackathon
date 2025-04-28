@@ -31,13 +31,12 @@ const Chbox: React.FC<CheckBoxProps> = ({
       <motion.div
         initial={false}
         animate={{
-          backgroundColor: "#e5e7eb", // indigo-500 / gray-200
-          borderColor: "#6366f1"    // indigo-500 / gray-500
+          backgroundColor: checked ? "var(--tw-color-primary)" : "var(--tw-color-background)", // primary / background
+          borderColor: checked ? "var(--tw-color-primary)" : "var(--tw-color-secondary)",       // primary / secondary
         }}
         transition={{ duration: 0.2 }}
-        className={`w-6 h-6 flex items-center justify-center border-[2px] ${
-          rounded ? "rounded-full" : "rounded-none"
-        } p-1`}
+        className={`w-6 h-6 flex items-center justify-center border-[2px] ${rounded ? "rounded-full" : "rounded-none"
+          } p-1`}
       >
         <AnimatePresence>
           {checked && (
@@ -48,13 +47,13 @@ const Chbox: React.FC<CheckBoxProps> = ({
               exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <div className="border-gray-200 size-[18px] bg-indigo-500 rounded-full border-2"></div>
-              {/* <Icons.check className="text-white w-4 h-4" /> */}
+              {/* Используем встроенный цвет из TailwindCSS */}
+              <div className="bg-primary w-4 h-4 rounded-full border-2"></div>
             </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
-      <span className="ml-2">{children}</span>
+      <span className="ml-2 text-accent">{children}</span> 
     </div>
   );
 };

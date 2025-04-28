@@ -1,6 +1,7 @@
 import React from 'react'
 import MessageList from '../../components/ai/MessageList'
 import MessageInput from '../../components/ai/MessageInput'
+import Checkbox from '../../components/checkbox/checkbox'
 
 
 const Home = () => {

@@ -32,8 +32,8 @@ const Checkbox: React.FC<CheckBoxProps> = ({
       <motion.div
         initial={false}
         animate={{
-          backgroundColor: checked ? "#6366f1" : "#e5e7eb", // indigo-500 / gray-200
-          borderColor: checked ? "#6366f1" : "#6b7280",     // indigo-500 / gray-500
+          backgroundColor: checked ? "var(--tw-color-primary)" : "var(--tw-color-background)", // primary и background из tailwind.config
+          borderColor: checked ? "var(--tw-color-primary)" : "var(--tw-color-secondary)", // primary и secondary из tailwind.config
         }}
         transition={{ duration: 0.2 }}
         className={`w-6 h-6 flex items-center justify-center border-[2.5px] ${
@@ -54,12 +54,13 @@ const Checkbox: React.FC<CheckBoxProps> = ({
           )}
         </AnimatePresence>
       </motion.div>
-      <span className="ml-2">{children}</span>
+      <span className="ml-2 text-accent">{children}</span> {/* Используем accent для текста */}
     </div>
   );
 };
 
 export default Checkbox;
+
 
 
 // Пример использования:

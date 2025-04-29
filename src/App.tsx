@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Loading } from "./components/loading/Loading"; 
 import Home from "./pages/home/Home";
 import NotFound from "./pages/not-found/NotFound";
+import Trends from "./pages/analytics/Trends";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ function App() {
       <div className=''>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Trends" element={<Trends />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </div>

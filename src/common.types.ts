@@ -48,3 +48,14 @@ export interface MenuItemProps {
   name: string;
   link: string;
 }
+
+
+// Trends
+export interface Trend {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  growthRate: number;
+  popularityScore: number;
+}

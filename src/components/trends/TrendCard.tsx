@@ -45,7 +45,7 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Круговая диаграмма */}
           <motion.div
-            className="h-48 w-full lg:w-1/2 bg-gray-100 p-8 rounded-lg"
+            className="h-56 w-full lg:w-1/2 bg-gray-100 p-8 rounded-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
@@ -74,7 +74,7 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
 
           {/* Гистограмма */}
           <motion.div
-            className="h-48 w-full lg:w-1/2 bg-gray-100 p-5 rounded-lg"
+            className="h-56 w-full lg:w-1/2 bg-gray-100 p-8 rounded-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
@@ -87,14 +87,14 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
                 <Bar dataKey="count" fill={primaryColor} radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-            <p className="text-center text-xs text-gray-700 font-medium mt-0">
+            <p className="text-center text-xs text-gray-700 font-medium mb-2">
               Кол-во стартапов за 5 лет
             </p>
           </motion.div>
 
           {/* Дополнительная информация */}
           <motion.div
-            className="h-48 w-64 bg-gray-100 p-6 rounded-lg"
+            className="h-56 w-64 bg-gray-100 p-6 rounded-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}

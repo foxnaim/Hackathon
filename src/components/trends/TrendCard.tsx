@@ -22,7 +22,7 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
   const primaryColor = "#4ade80"; // Основной цвет графиков
 
   const startupData = [
-    { year: "2019", count: 8 }, // Данные по годам
+    { year: "2019", count: 8 },
     { year: "2020", count: 12 },
     { year: "2021", count: 18 },
     { year: "2022", count: 23 },
@@ -37,12 +37,11 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div >
+      <div>
         <h3 className="text-2xl font-bold mb-2">{trend.title}</h3>
         <p className="text-sm text-gray-600 mb-2">{trend.description}</p>
         <p className="text-xs text-gray-500 italic mb-4">Категория: {trend.category}</p>
 
-        {/* Контейнер для графиков */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Круговая диаграмма */}
           <motion.div
@@ -93,24 +92,30 @@ const TrendCard = ({ trend }: { trend: Trend }) => {
             </p>
           </motion.div>
 
-          {/* Дополнительная информация (Конверсия и Сумма инвестиций) */}
+          {/* Дополнительная информация */}
           <motion.div
-            className="h-48 bg-gray-100 p-6 rounded-lg"
+            className="h-48 w-64 bg-gray-100 p-6 rounded-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
           >
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between h-ful gap-2">
               <div>
                 <p className="text-xs text-gray-600">Конверсия</p>
                 <p className="text-xl font-bold text-green-600">
-                  {trend.growthRate}% {/* Конверсия из данных тренда */}
+                  {trend.growthRate}%
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-600">Сумма инвестиций</p>
                 <p className="text-xl font-bold text-green-600">
                   {trend.investmentAmount ? `${trend.investmentAmount} тг` : "200.000 тг"}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-600">Оценка потенциала</p>
+                <p className="text-xl font-bold text-green-600">
+                  8.7 / 10
                 </p>
               </div>
             </div>

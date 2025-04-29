@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { mockTrends } from '../../components/trends/data/mockTrends';
 import TrendCard from '../../components/trends/TrendCard';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Icons } from '../../ui/icons/Icons';
+import Header from '../../components/header/Header';
+
 
 const Trends = () => {
   const [sortBy] = useState<'growth' | 'popularity'>('growth');
@@ -13,9 +17,10 @@ const Trends = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Анализ трендов рынка</h1>
-
+    <React.Fragment>
+    <Header/>
+    <div className="w-3/4 mx-auto p-6">
+      <span className=" flex text-3xl font-bold ">Анализ трендов рынка</span>
       <motion.div
         className="flex flex-col gap-6"
         initial={{ opacity: 0 }}
@@ -28,6 +33,7 @@ const Trends = () => {
         ))}
       </motion.div>
     </div>
+    </React.Fragment>
   );
 };
 

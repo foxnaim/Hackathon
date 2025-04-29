@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "../../ui/icons/Icons";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Состояние для открытия/закрытия меню
@@ -50,8 +51,11 @@ const Header: React.FC = () => {
               <div className=" ml-2  p-4 border-b border-gray-400">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">Статистики</h3>
                 <ul className="space-y-4 mb-4">
+
                   <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
+                    <Link to="/Trends">
                     Dashboard #1
+                    </Link>
                     <span><Icons.arrow className="size-4 text-gray-700"/></span>
                   </li>
                   <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">

@@ -1,10 +1,8 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { mockTrends } from '../../components/trends/data/mockTrends';
 import TrendCard from '../../components/trends/TrendCard';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Icons } from '../../ui/icons/Icons';
-import Header from '../../components/header/Header';
+import Header from '../../components/header/header';
 
 
 const Trends = () => {
@@ -17,6 +15,8 @@ const Trends = () => {
   );
 
   return (
+    <React.Fragment>
+      <Header/>
     <div className="max-w-3xl mx-auto p-6">
       <span className="text-3xl font-bold mb-6">Анализ трендов рынка</span>
 

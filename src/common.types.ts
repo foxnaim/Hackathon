@@ -58,4 +58,5 @@ export interface Trend {
   category: string;
   growthRate: number;
   popularityScore: number;
+  investmentAmount?: number | string;
 }

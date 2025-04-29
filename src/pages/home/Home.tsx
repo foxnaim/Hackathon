@@ -1,7 +1,7 @@
 
 import MessageList from "../../components/ai/MessageList";
 import MessageInput from "../../components/ai/MessageInput";
-import Header from "../../components/header/Header";
+import Header from "../../components/header/header";
 
 const Home = () => {
   return (

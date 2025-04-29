@@ -13,7 +13,7 @@ const Trends = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="w-3/4 mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Анализ трендов рынка</h1>
 
       <motion.div

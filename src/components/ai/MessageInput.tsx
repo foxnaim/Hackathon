@@ -56,7 +56,7 @@ const MessageInput: React.FC = () => {
               disabled={isLoading || !message.trim()}
               className="bg-gray-300 hover:bg-gray-300 p-3 rounded-md "
             >
-              <Icons.send className="w-8 h-8 text-black mt-1" />
+              <Icons.send className="w-8 h-8 text-gray-500 mt-1" />
             </Button>
           </div>
         </div>

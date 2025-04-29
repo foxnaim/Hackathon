@@ -4,6 +4,7 @@ import { FiMail, FiLock, FiUser, FiPhone, FiSearch, FiChevronDown, FiChevronUp, 
 import { LuSendHorizontal } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
+import { IoIosArrowForward } from "react-icons/io";
 
 export const Icons = {
   spinner: AiOutlineLoading3Quarters,
@@ -19,4 +20,5 @@ export const Icons = {
   send: LuSendHorizontal,
   menu: GiHamburgerMenu,
   close: IoCloseSharp,
+  arrow: IoIosArrowForward,
 };

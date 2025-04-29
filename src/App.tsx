@@ -21,10 +21,12 @@ function App() {
       {/* {isLoading ? (
         <Loading />
       ) : ( */}
+      <div className='bg-gray-100'>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+      </div>
       {/* )} */}
     </>
   );

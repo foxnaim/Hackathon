@@ -15,8 +15,8 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-auto bg-gray-100 shadow-sm shadow-gray-400">
-      <div className="p-8 mx-auto py-1 flex justify-between items-center">
+    <div className="w-full h-16 bg-gray-100 shadow-sm shadow-gray-400">
+      <div className="px-6 mx-auto py-2 flex justify-between items-center">
         <motion.h2
           className="font-bold"
           initial={{ opacity: 0 }}
@@ -46,21 +46,21 @@ const Header: React.FC = () => {
         {/* Боковое меню для мобильных устройств */}
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 w-[400px] h-full bg-slate-200 text-black shadow-xl shadow-gray-700 z-150"
+            className="fixed top-0 left-0 w-1/5 h-full bg-slate-200 text-black shadow-xl shadow-gray-700 z-150"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             transition={{ duration: 0.3 }}
           >
             <button onClick={toggleMenu} className="text-gray-600">
-              <Icons.close className="w-8 h-8 mx-8 mt-3" />
+              <Icons.close className="w-8 h-8 mx-5 mt-4" />
             </button>
 
             {/* Разделение на 50/50: Статистики и Чаты */}
             <div className="h-full flex flex-col">
               {/* Статистики */}
-              <div className="flex-1 ml-6  p-4 border-b border-gray-400">
+              <div className=" ml-2  p-4 border-b border-gray-400">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">Статистики</h3>
-                <ul className="space-y-4">
+                <ul className="space-y-4 mb-4">
                   <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
                     Dashboard #1
                     <span><Icons.arrow className="size-4 text-gray-700"/></span>
@@ -77,7 +77,7 @@ const Header: React.FC = () => {
               </div>
 
               {/* Чаты */}
-              <div className="flex-1 p-4 ml-6">
+              <div className="flex-1 p-4 ml-2">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">Чаты</h3>
                 <ul className="space-y-4">
                   <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer">Чат 1</li>

@@ -21,7 +21,7 @@ function App() {
       {/* {isLoading ? (
         <Loading />
       ) : ( */}
-      <div className='bg-gray-100'>
+      <div className=''>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />

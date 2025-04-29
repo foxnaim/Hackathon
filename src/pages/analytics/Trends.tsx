@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { mockTrends } from '../../components/trends/data/mockTrends';
 import TrendCard from "../../components/trends/TrendCard";
-import TrendSearch from '../../components/trends/TrendSearch';
+
 import { motion } from 'framer-motion'; // Импортируем motion
 
 const TrendExplorer = () => {
@@ -30,9 +30,6 @@ const TrendExplorer = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Анализ трендов рынка</h1>
-
-      {/* Вставка компонента поиска */}
-      <TrendSearch onSearch={handleSearch} />
 
       {/* Анимация появления трендов */}
       <motion.div

@@ -4,7 +4,7 @@ import TrendCard from "../../components/trends/TrendCard";
 
 import { motion } from 'framer-motion'; // Импортируем motion
 
-const TrendExplorer = () => {
+const Trends = () => {
   const [sortBy] = useState<'growth' | 'popularity'>('growth');
 
   const filteredTrends = mockTrends
@@ -42,4 +42,4 @@ const TrendExplorer = () => {
   );
 };
 
-export default TrendExplorer;
+export default Trends;

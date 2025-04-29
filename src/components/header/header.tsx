@@ -72,20 +72,31 @@ const Header: React.FC = () => {
               {/* Чаты */}
               <div className="flex-1 p-4 ml-2">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">Чаты</h3>
-                <ul className="space-y-4">
-                <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
-                Чат 1
-                    <span><Icons.arrow className="size-4 text-gray-700"/></span>
+                <ul className="flex flex-col gap-4">
+                  <Link to="/">
+                    <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
+                      Чат 1
+                      <span><Icons.arrow className="size-4 text-gray-700"/></span>
+                    </li>
+                  </Link>
+                  <Link to="/">
+                    <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
+                    Чат 2
+                      <span><Icons.arrow className="size-4 text-gray-700"/></span>
+                    </li>
+                  </Link>
+                  <Link to="/">
+                    <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
+                    Чат 3
+                      <span><Icons.arrow className="size-4 text-gray-700"/></span>
+                    </li>
+                  </Link>
+                  <Link to="/">
+                  <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer">
+                    Создать новый чат
                   </li>
-                  <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
-                  Чат 2
-                    <span><Icons.arrow className="size-4 text-gray-700"/></span>
-                  </li>
-                  <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer flex justify-between items-center">
-                  Чат 3
-                    <span><Icons.arrow className="size-4 text-gray-700"/></span>
-                  </li>
-                  <li className="px-3 py-2 bg-gray-300 rounded-md cursor-pointer">Создать новый чат</li>
+                  </Link>
+
                 </ul>
               </div>
             </div>

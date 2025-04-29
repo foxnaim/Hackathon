@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ItemMenu } from "./data/Menu"; // Импортируем данные
-import MenuItem from "./MenuItem"; // Импортируем компонент меню
 import { Icons } from "../../ui/icons/Icons";
 
 const Header: React.FC = () => {

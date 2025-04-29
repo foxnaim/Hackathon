@@ -5,27 +5,15 @@ import TrendCard from "../../components/trends/TrendCard";
 import { motion } from 'framer-motion'; // Импортируем motion
 
 const TrendExplorer = () => {
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('');
-  const [sortBy, setSortBy] = useState<'growth' | 'popularity'>('growth');
+  const [sortBy] = useState<'growth' | 'popularity'>('growth');
 
   const filteredTrends = mockTrends
-    .filter(
-      trend =>
-        (trend.title.toLowerCase().includes(search.toLowerCase()) ||
-          trend.description.toLowerCase().includes(search.toLowerCase())) &&
-        (category === '' || trend.category === category)
-    )
     .sort((a, b) =>
       sortBy === 'growth'
         ? b.growthRate - a.growthRate
         : b.popularityScore - a.popularityScore
     );
 
-  // Функция для обработки поиска
-  const handleSearch = (value: string) => {
-    setSearch(value);
-  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">

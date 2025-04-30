@@ -1,10 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import Input from '../../components/input/input'
 
-type Props = {}
+const Register: React.FC = () => {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-const Register = (props: Props) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      alert('Пароли не совпадают')
+      return
+    }
+
+    console.log('Register:', { name, email, password })
+    // регистрационная логика здесь
+  }
+
   return (
-    <div>Register</div>
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <motion.div
+        className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl max-w-md w-full"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+          Регистрация
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Имя
+            </label>
+            <Input
+              type="text"
+              icon="user"
+              placeholder="Ваше имя"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Email
+            </label>
+            <Input
+              type="email"
+              icon="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Пароль
+            </label>
+            <Input
+              type="password"
+              icon="password"
+              placeholder="Придумайте пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Подтвердите пароль
+            </label>
+            <Input
+              type="password"
+              icon="password"
+              placeholder="Повторите пароль"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
+          >
+            Зарегистрироваться
+          </button>
+        </form>
+      </motion.div>
+    </div>
   )
 }
 

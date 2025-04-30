@@ -4,6 +4,8 @@ import { Loading } from "./components/loading/Loading";
 import Home from "./pages/home/Home";
 import NotFound from "./pages/not-found/NotFound";
 import Trends from "./pages/analytics/Trends";
+import Login from "./pages/login/Login";
+import Register from "./pages/login/Register";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +28,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Trends" element={<Trends />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </div>

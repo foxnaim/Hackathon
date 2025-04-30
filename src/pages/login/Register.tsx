@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 
 const Register: React.FC = () => {
-  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -30,31 +30,21 @@ const Register: React.FC = () => {
 
     try {
       const response = await axios.post(`${API_URL}/users/register`, {
-        name,
+        username,
         email,
         password,
       })
 
-      const data = response.data
-
-      if (data.token) {
-        Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
-        toast.success('Регистрация успешна!')
-        navigate('/')
-      } else {
-        throw new Error('Токен не получен')
-      }
+      navigate('/login')
     } catch (error: any) {
-      const message =
-        error.response?.data?.message || 'Произошла ошибка при регистрации'
-      toast.error(message)
+      console.log(error)
     } finally {
       setIsLoading(false)
     }
   }
 
   const isButtonDisabled =
-    !name || !email || !password || !confirmPassword || password !== confirmPassword
+    !username || !email || !password || !confirmPassword || password !== confirmPassword
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
@@ -77,8 +67,8 @@ const Register: React.FC = () => {
               type="text"
               icon="user"
               placeholder="Ваше имя"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               autoComplete="name"  // Added autoComplete for name
             />
           </div>

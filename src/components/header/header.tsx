@@ -37,7 +37,7 @@ const Header: React.FC = () => {
         {/* Мобильное меню */}
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 h-screen w-[70%] bg-white z-[9999] shadow-xl shadow-gray-700 flex flex-col justify-between"
+            className="fixed top-0 left-0 h-screen w-2/3 md:w-1/3 lg:w-1/4  bg-white z-[9999] shadow-xl shadow-gray-700 flex flex-col justify-between"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}

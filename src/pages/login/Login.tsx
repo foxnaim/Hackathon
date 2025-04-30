@@ -29,8 +29,8 @@ const Login: React.FC = () => {
 
       const data = response.data
 
-      if (data.token) {
-        Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
+      if (data) {
+        Cookies.set('authorization', `Bearer ${data}`, { expires: 7 })
         toast.success('Успешный вход!')
         navigate('/')
       } else {

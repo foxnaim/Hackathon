@@ -40,7 +40,7 @@ const Register: React.FC = () => {
       if (data.token) {
         Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
         toast.success('Регистрация успешна!')
-        navigate('/dashboard')
+        navigate('/')
       } else {
         throw new Error('Токен не получен')
       }

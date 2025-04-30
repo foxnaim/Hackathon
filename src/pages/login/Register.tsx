@@ -1,30 +1,39 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
-import Button from '../../components/button/button' 
+import Button from '../../components/button/button'
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     if (password !== confirmPassword) {
       alert('Пароли не совпадают')
       return
     }
 
-    console.log('Register:', { name, email, password })
-    // регистрационная логика здесь
+    // Включаем индикатор загрузки
+    setIsLoading(true)
+
+    // Имитируем асинхронную операцию регистрации (например, отправку данных на сервер)
+    setTimeout(() => {
+      console.log('Register:', { name, email, password })
+      // Логика успешной регистрации
+      setIsLoading(false) // Отключаем индикатор загрузки после выполнения
+    }, 2000) // Задержка в 2 секунды для демонстрации
   }
 
   // Логика для блокировки кнопки, если одно из полей пустое или пароли не совпадают
   const isButtonDisabled = !name || !email || !password || !confirmPassword || password !== confirmPassword
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
       <motion.div
         className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl max-w-md w-full"
         initial={{ opacity: 0, y: 40 }}
@@ -85,10 +94,11 @@ const Register: React.FC = () => {
           </div>
           <Button
             variant="solid"
-            disabled={isButtonDisabled} 
-            className="w-full"
+            disabled={isButtonDisabled || isLoading} // Блокируем кнопку во время загрузки или если поля не заполнены
+            isLoading={isLoading} // Передаем флаг загрузки
+            className="w-full bg-gray-400"
           >
-            Зарегистрироваться
+            {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} {/* Отображаем текст в зависимости от загрузки */}
           </Button>
         </form>
       </motion.div>

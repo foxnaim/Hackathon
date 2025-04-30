@@ -7,7 +7,7 @@ function NotFound() {
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-9xl font-bold text-indigo-500"
+        className="text-9xl font-bold text-gray-600"
       >
         404
       </motion.h1>
@@ -31,7 +31,7 @@ function NotFound() {
         href="/"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="mt-6 inline-block bg-indigo-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-600 transition"
+        className="mt-6 inline-block bg-gray-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-gray-600 transition"
       >
         На главную
       </motion.a>

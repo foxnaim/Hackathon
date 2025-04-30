@@ -14,7 +14,7 @@ const Home = () => {
             <MessageList />
           </div>
         </div>
-        <div className="sticky bottom-0 z-10 w-full">
+        <div className="sticky w-full bottom-4 z-5  rounded-5xl">
           <MessageInput />
         </div>
       </div>

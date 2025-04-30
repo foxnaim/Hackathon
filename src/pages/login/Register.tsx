@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
+import { Link } from 'react-router-dom'  
+
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -101,6 +103,16 @@ const Register: React.FC = () => {
             {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} {/* Отображаем текст в зависимости от загрузки */}
           </Button>
         </form>
+
+        {/* Добавляем ссылку на страницу входа */}
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            У вас уже есть аккаунт?{' '}
+            <Link to="/Login" className="text-blue-500 hover:underline">
+              Войдите
+            </Link>
+          </p>
+        </div>
       </motion.div>
     </div>
   )

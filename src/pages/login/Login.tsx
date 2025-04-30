@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
 import { Icons } from '../../ui/icons/Icons'
+import { Link } from 'react-router-dom' 
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -72,6 +73,14 @@ const Login: React.FC = () => {
             Войти
           </Button>
         </form>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            Нет аккаунта?{' '}
+            <Link to="/Register" className="text-blue-500 hover:underline">
+              Зарегистрируйтесь
+            </Link>
+          </p>
+        </div>
       </motion.div>
     </div>
   )

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import Cookies from 'js-cookie'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
-import { Link } from 'react-router-dom'  
+import { Link, useNavigate } from 'react-router-dom'
+import {API_URL} from '../../api/context'
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -11,27 +13,50 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (password !== confirmPassword) {
       alert('Пароли не совпадают')
       return
     }
 
-
     setIsLoading(true)
 
+    try {
+      const response = await fetch(`${API_URL}/users/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      })
 
-    setTimeout(() => {
-      console.log('Register:', { name, email, password })
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Ошибка регистрации')
+      }
 
-      setIsLoading(false) 
-    }, 2000) 
+      const data = await response.json()
+
+      if (data.token) {
+        Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
+        alert('Регистрация успешна!')
+        navigate('/dashboard') // Измени путь по своему роутингу
+      } else {
+        throw new Error('Токен не получен')
+      }
+    } catch (error: any) {
+      alert(error.message || 'Произошла ошибка при регистрации')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-
-  const isButtonDisabled = !name || !email || !password || !confirmPassword || password !== confirmPassword
+  const isButtonDisabled =
+    !name || !email || !password || !confirmPassword || password !== confirmPassword
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
@@ -46,7 +71,7 @@ const Register: React.FC = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700  mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Имя
             </label>
             <Input
@@ -58,7 +83,7 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700  mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <Input
@@ -70,7 +95,7 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700  mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Пароль
             </label>
             <Input
@@ -82,7 +107,7 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700  mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Подтвердите пароль
             </label>
             <Input
@@ -95,19 +120,18 @@ const Register: React.FC = () => {
           </div>
           <Button
             variant="solid"
-            disabled={isButtonDisabled || isLoading} 
-            isLoading={isLoading} 
-            className="w-full bg-[#4ade80] text-white" 
+            disabled={isButtonDisabled || isLoading}
+            isLoading={isLoading}
+            className="w-full bg-[#4ade80] text-white"
           >
-            {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} 
+            {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
           </Button>
         </form>
 
-       
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600 ">
             У вас уже есть аккаунт?{' '}
-            <Link to="/Login" className="text-blue-500 hover:underline">
+            <Link to="/login" className="text-blue-500 hover:underline">
               Войдите
             </Link>
           </p>

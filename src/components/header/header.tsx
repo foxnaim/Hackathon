@@ -141,7 +141,7 @@ const Header: React.FC = () => {
             transition={{ duration: 0.3 }}
           >
             <div>
-              <div className="flex justify-end p-4">
+              <div className="flex justify-start p-4">
                 <button onClick={toggleMenu}>
                   <Icons.close className="w-7 h-7 text-gray-700" />
                 </button>
@@ -154,13 +154,13 @@ const Header: React.FC = () => {
                   <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #2</div></li>
                   <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #3</div></li>
                 </ul>
-
+                <div className="border border-black mt-10"/>
                 <h3 className="text-lg font-semibold mt-6 mb-2">Чаты</h3>
                 <ul className="space-y-3">
                   <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 1</Link></li>
                   <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 2</Link></li>
                   <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 3</Link></li>
-                  <li><Link to="/" className="block bg-gray-200 text-center rounded-md px-3 py-2 font-medium">+ Новый чат</Link></li>
+                  <li><Link to="/" className="block bg-[#4ade80] text-white text-center rounded-md px-3 py-2 font-medium">+ Новый чат</Link></li>
                 </ul>
               </div>
             </div>

@@ -53,7 +53,7 @@ const messages: MessageType[] = [
 
 const MessageList: React.FC = () => {
   return (
-    <div className="flex flex-col space-y-4 p-5">
+    <div className="flex flex-col space-y-4 p-4">
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}

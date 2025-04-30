@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React  from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ButtonProps } from "../../common.types";
 import { Icons } from "../../ui/icons/Icons";

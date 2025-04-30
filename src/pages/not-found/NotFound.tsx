@@ -31,7 +31,7 @@ function NotFound() {
         href="/"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="mt-6 inline-block bg-gray-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-gray-600 transition"
+        className="mt-6 inline-block bg-[#4ade80] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#36a15c] transition"
       >
         На главную
       </motion.a>

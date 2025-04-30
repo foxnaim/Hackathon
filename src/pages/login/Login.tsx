@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 ">
+        <h2 className="text-3xl flex justify-center items-center font-bold mb-6 text-gray-900 ">
           Войти в аккаунт
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">

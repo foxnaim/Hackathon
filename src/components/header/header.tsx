@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "../../ui/icons/Icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // ⬅️ импорт useNavigate
 import { API_URL } from "../../api/context";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<{ username?: string; email?: string } | null>(null);
+  const navigate = useNavigate(); // ⬅️ инициализация навигации
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
@@ -29,10 +30,15 @@ const Header: React.FC = () => {
       try {
         const token = Cookies.get("authorization");
 
+        if (!token) {
+          navigate("/register"); // ⬅️ если токена нет — на регистрацию
+          return;
+        }
+
         const response = await axios.get(`${API_URL}/users/profile`, {
           withCredentials: true,
           headers: {
-            Authorization: token || "",
+            Authorization: token,
           },
         });
 
@@ -40,12 +46,13 @@ const Header: React.FC = () => {
       } catch (error) {
         console.error("Ошибка при получении профиля:", error);
         setUser(null);
+        navigate("/register"); // ⬅️ если ошибка — на регистрацию
       }
     };
 
     fetchUser();
-  }, []);
-console.log(user);
+  }, [navigate]);
+
   return (
     <header className="w-full h-16 bg-gray-100 shadow-sm shadow-gray-400 z-50">
       <div className="px-4 sm:px-6 mx-auto py-3 flex justify-between items-center">
@@ -57,14 +64,13 @@ console.log(user);
         {/* Иконка профиля + имя */}
         <div className="flex items-center space-x-2">
           <Icons.user className="w-7 h-7 text-gray-600" />
-          {user && <span className="text-sm text-gray-700">{user.username}</span>}
-          
+          {user && <span className="text-sm text-gray-700">{user.username || user.email}</span>}
         </div>
 
         {/* Мобильное меню */}
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 h-screen w-2/3 md:w-1/3 lg:w-1/4  bg-white z-[9999] shadow-xl shadow-gray-700 flex flex-col justify-between"
+            className="fixed top-0 left-0 h-screen w-2/3 md:w-1/3 lg:w-1/4 bg-white z-[9999] shadow-xl shadow-gray-700 flex flex-col justify-between"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
@@ -106,3 +112,4 @@ console.log(user);
 };
 
 export default Header;
+

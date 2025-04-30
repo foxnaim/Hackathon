@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "../../ui/icons/Icons";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../api/context";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<{ username?: string; email?: string } | null>(null);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
@@ -20,18 +24,41 @@ const Header: React.FC = () => {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = Cookies.get("authorization");
+
+        const response = await axios.get(`${API_URL}/users/profile`, {
+          withCredentials: true,
+          headers: {
+            Authorization: token || "",
+          },
+        });
+
+        setUser(response.data);
+      } catch (error) {
+        console.error("Ошибка при получении профиля:", error);
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, []);
+console.log(user);
   return (
     <header className="w-full h-16 bg-gray-100 shadow-sm shadow-gray-400 z-50">
       <div className="px-4 sm:px-6 mx-auto py-3 flex justify-between items-center">
-
-        {/* Бургер-кнопка (мобильная) */}
+        {/* Бургер-кнопка */}
         <button onClick={toggleMenu} className="flex items-center">
           <Icons.menu className="w-7 h-7 text-gray-600" />
         </button>
 
-        {/* Иконка профиля */}
-        <div className="flex items-center">
+        {/* Иконка профиля + имя */}
+        <div className="flex items-center space-x-2">
           <Icons.user className="w-7 h-7 text-gray-600" />
+          {user && <span className="text-sm text-gray-700">{user.username}</span>}
+          
         </div>
 
         {/* Мобильное меню */}

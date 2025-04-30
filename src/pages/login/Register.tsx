@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import Cookies from 'js-cookie'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
 import { Link, useNavigate } from 'react-router-dom'

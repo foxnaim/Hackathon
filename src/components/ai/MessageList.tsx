@@ -53,12 +53,13 @@ const messages: MessageType[] = [
 
 const MessageList: React.FC = () => {
   return (
-    <div className="flex flex-col space-y-4 p-4">
+    <div className="flex flex-col space-y-4 p-4 bg-white overflow-y-auto h-full">
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}
     </div>
   );
 };
+
 
 export default MessageList;

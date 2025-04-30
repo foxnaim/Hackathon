@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { mockTrends } from '../../components/trends/data/mockTrends';
 import TrendCard from '../../components/trends/TrendCard';
 import { motion } from 'framer-motion';

@@ -6,6 +6,9 @@ import Button from '../../components/button/button'
 import { Link, useNavigate } from 'react-router-dom'
 import { API_URL } from '../../api/context'
 import { Icons } from '../../ui/icons/Icons'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -19,30 +22,24 @@ const Login: React.FC = () => {
     setIsLoading(true)
 
     try {
-      const response = await fetch(`${API_URL}/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post(`${API_URL}/users/login`, {
+        email,
+        password,
       })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'Ошибка входа')
-      }
-
-      const data = await response.json()
+      const data = response.data
 
       if (data.token) {
         Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
-        alert('Успешный вход!')
-        navigate('/dashboard') // Измени на нужный маршрут
+        toast.success('Успешный вход!')
+        navigate('/dashboard')
       } else {
         throw new Error('Токен не получен')
       }
     } catch (error: any) {
-      alert(error.message || 'Произошла ошибка при входе')
+      const message =
+        error.response?.data?.message || error.message || 'Произошла ошибка при входе'
+      toast.error(message)
     } finally {
       setIsLoading(false)
     }
@@ -52,6 +49,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
+      <ToastContainer position="top-right" autoClose={3000} />
       <motion.div
         className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full"
         initial={{ opacity: 0, y: 40 }}

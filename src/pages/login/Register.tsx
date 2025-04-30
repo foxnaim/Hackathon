@@ -4,7 +4,10 @@ import Cookies from 'js-cookie'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
 import { Link, useNavigate } from 'react-router-dom'
-import {API_URL} from '../../api/context'
+import { API_URL } from '../../api/context'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -19,37 +22,32 @@ const Register: React.FC = () => {
     e.preventDefault()
 
     if (password !== confirmPassword) {
-      alert('Пароли не совпадают')
+      toast.error('Пароли не совпадают')
       return
     }
 
     setIsLoading(true)
 
     try {
-      const response = await fetch(`${API_URL}/users/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
+      const response = await axios.post(`${API_URL}/users/register`, {
+        name,
+        email,
+        password,
       })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'Ошибка регистрации')
-      }
-
-      const data = await response.json()
+      const data = response.data
 
       if (data.token) {
         Cookies.set('authorization', `Bearer ${data.token}`, { expires: 7 })
-        alert('Регистрация успешна!')
-        navigate('/dashboard') // Измени путь по своему роутингу
+        toast.success('Регистрация успешна!')
+        navigate('/dashboard')
       } else {
         throw new Error('Токен не получен')
       }
     } catch (error: any) {
-      alert(error.message || 'Произошла ошибка при регистрации')
+      const message =
+        error.response?.data?.message || 'Произошла ошибка при регистрации'
+      toast.error(message)
     } finally {
       setIsLoading(false)
     }
@@ -60,6 +58,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
+      <ToastContainer position="top-right" autoClose={3000} />
       <motion.div
         className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full"
         initial={{ opacity: 0, y: 40 }}

@@ -11,7 +11,7 @@ const iconMap = {
   search: Icons.search,
 };
 
-export const Input: React.FC<InputProps & { value: string; onChange: React.ChangeEventHandler<HTMLInputElement> }> = ({
+export const Input: React.FC<InputProps & { value: string; onChange: React.ChangeEventHandler<HTMLInputElement>; autoComplete?: string }> = ({
   placeholder = "Введите текст...",
   disabled = false,
   type = "text",
@@ -19,6 +19,7 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
   className = "",
   value,
   onChange,
+  autoComplete,  // Add autoComplete here
 }) => {
   const IconComponent = icon ? iconMap[icon] : null;
 
@@ -37,7 +38,7 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
       >
         {IconComponent && (
           <div className="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <IconComponent className="text-text w-5 h-5" /> {/* Иконка останется с оригинальным цветом */}
+            <IconComponent className="text-text w-5 h-5" />
           </div>
         )}
         <input
@@ -48,8 +49,8 @@ export const Input: React.FC<InputProps & { value: string; onChange: React.Chang
           placeholder={placeholder}
           className={`w-full border-2 border-gray-300 rounded-lg px-4 text-black focus:ring-2 focus:ring-primary focus:border-0 ${
             IconComponent ? "pl-12" : "pl-4"
-          } py-3 text-base outline-none transition ${className}`} 
-          // Заменили text-text на text-black для черного текста
+          } py-3 text-base outline-none transition ${className}`}
+          autoComplete={autoComplete}  // Apply autoComplete here
         />
       </motion.div>
     </motion.div>

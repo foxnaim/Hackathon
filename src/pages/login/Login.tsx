@@ -70,6 +70,7 @@ const Login: React.FC = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email" // Добавлен атрибут autocomplete для email
             />
           </div>
           <div>
@@ -82,6 +83,7 @@ const Login: React.FC = () => {
               placeholder="Введите пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password" // Добавлен атрибут autocomplete для пароля
             />
           </div>
           <Button

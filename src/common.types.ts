@@ -40,6 +40,7 @@ export type InputProps = {
   type?: string;
   icon?: "email" | "password" | "user" | "phone" | "search";
   className?: string;
+  autoComplete?: string
 };
 
 

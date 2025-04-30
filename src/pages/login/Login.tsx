@@ -29,17 +29,17 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
       <motion.div
-        className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl max-w-md w-full"
+        className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 ">
           Войти в аккаунт
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <Input
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700  mb-1">
               Пароль
             </label>
             <Input
@@ -73,7 +73,7 @@ const Login: React.FC = () => {
           </Button>
         </form>
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-700 dark:text-gray-300">
+          <p className="text-sm text-gray-700 ">
             Нет аккаунта?{' '}
             <Link to="/Register" className="text-blue-500 hover:underline">
               Зарегистрируйтесь

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
+import Button from '../../components/button/button' 
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -18,6 +19,9 @@ const Register: React.FC = () => {
     console.log('Register:', { name, email, password })
     // регистрационная логика здесь
   }
+
+  // Логика для блокировки кнопки, если одно из полей пустое или пароли не совпадают
+  const isButtonDisabled = !name || !email || !password || !confirmPassword || password !== confirmPassword
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
@@ -79,12 +83,13 @@ const Register: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
+          <Button
+            variant="solid"
+            disabled={isButtonDisabled} 
+            className="w-full"
           >
             Зарегистрироваться
-          </button>
+          </Button>
         </form>
       </motion.div>
     </div>

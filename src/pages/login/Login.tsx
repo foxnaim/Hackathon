@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
 import { Icons } from '../../ui/icons/Icons'
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -24,7 +24,6 @@ const Login: React.FC = () => {
     }
   }
 
-  // Логика для блокировки кнопки, если email или password пустые
   const isButtonDisabled = !email || !password
 
   return (
@@ -66,9 +65,9 @@ const Login: React.FC = () => {
           <Button
             variant="solid"
             isLoading={isLoading}
-            icon={<Icons.user className="w-5 h-5" />}
-            disabled={isButtonDisabled}  // Блокируем кнопку, если поля пустые
-            className='bg-gray-400'
+            icon={<Icons.user className="w-5 h-5 text-white" />}
+            disabled={isButtonDisabled}  
+            className='bg-[#4ade80] text-white'  
           >
             Войти
           </Button>

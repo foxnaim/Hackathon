@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
-import { Link } from 'react-router-dom'  
-
+import { Link } from 'react-router-dom'  // Если используете react-router для навигации
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -100,11 +99,11 @@ const Register: React.FC = () => {
             isLoading={isLoading} // Передаем флаг загрузки
             className="w-full bg-gray-400"
           >
-            {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} {/* Отображаем текст в зависимости от загрузки */}
+            {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} 
           </Button>
         </form>
 
-        {/* Добавляем ссылку на страницу входа */}
+      
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-300">
             У вас уже есть аккаунт?{' '}

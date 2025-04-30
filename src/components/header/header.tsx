@@ -10,7 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState<{ username?: string; email?: string } | null>(null);
+  const [user, setUser] = useState<{ username?: string; email?: string; avatar?: string | null } | null>(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -56,59 +57,115 @@ const Header: React.FC = () => {
     fetchUser();
   }, [navigate]);
 
+  const handleAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("avatar", file);
+
+        try {
+          setLoading(true);
+          const token = Cookies.get("authorization");
+          const response = await axios.post(`${API_URL}/users/upload-avatar`, formData, {
+            withCredentials: true,
+            headers: {
+              Authorization: token,
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+          // Update user data with new avatar URL
+          setUser((prevUser) => ({
+            ...prevUser,
+            avatar: response.data.avatarUrl,
+          }));
+
+          toast.success("Фото профиля обновлено");
+        } catch (error) {
+          toast.error("Ошибка при загрузке фото");
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+  };
+
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-      <header className="w-full h-16 bg-gray-100 shadow-sm shadow-gray-400 z-50">
-        <div className="px-4 sm:px-6 mx-auto py-3 flex justify-between items-center">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <header className="w-full h-16 bg-white shadow-sm shadow-gray-200 z-50">
+        <div className="px-4 sm:px-6 max-w-7xl mx-auto h-full flex items-center justify-between">
+          {/* Menu Button */}
           <button onClick={toggleMenu} className="flex items-center">
-            <Icons.menu className="w-7 h-7 text-gray-600" />
+            <Icons.menu className="w-6 h-6 text-gray-600" />
           </button>
 
-          <div className="flex items-center space-x-2">
-            <Icons.user className="w-7 h-7 text-gray-600" />
-            {user && <span className="text-sm text-gray-700">{user.username || user.email}</span>}
-          </div>
-
-          {isMenuOpen && (
-            <motion.div
-              className="fixed top-0 left-0 h-screen w-2/3 md:w-1/3 lg:w-1/4 bg-white z-[9999] shadow-xl shadow-gray-700 flex flex-col justify-between"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ duration: 0.3 }}
-            >
-              <div>
-                <div className="flex justify-end p-4">
-                  <button onClick={toggleMenu}>
-                    <Icons.close className="w-8 h-8 text-gray-700" />
-                  </button>
+          {/* User Avatar */}
+          <div className="flex items-center gap-2">
+            {user && (
+              <div className="relative">
+                <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt="Avatar"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-300 text-gray-600 flex items-center justify-center text-xl font-bold rounded-full">
+                      {user.username?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                 </div>
 
-                <div className="px-4">
-                  <h3 className="text-lg font-bold mb-2">Статистики</h3>
-                  <ul className="space-y-3">
-                    <li>
-                      <Link to="/trends" className="block bg-gray-200 rounded-md px-3 py-2">
-                        Dashboard #1
-                      </Link>
-                    </li>
-                    <li className="block bg-gray-200 rounded-md px-3 py-2">Dashboard #2</li>
-                    <li className="block bg-gray-200 rounded-md px-3 py-2">Dashboard #3</li>
-                  </ul>
-
-                  <h3 className="text-lg font-bold mt-6 mb-2 p-2">Чаты</h3>
-                  <ul className="flex flex-col space-y-4">
-                    <Link to="/"><li className="block bg-gray-200 rounded-md px-3 py-2">Чат 1</li></Link>
-                    <Link to="/"><li className="block bg-gray-200 rounded-md px-3 py-2">Чат 2</li></Link>
-                    <Link to="/"><li className="block bg-gray-200 rounded-md px-3 py-2">Чат 3</li></Link>
-                    <Link to="/"><li className="block bg-gray-300 rounded-md px-3 py-2 text-center">+ Новый чат</li></Link>
-                  </ul>
-                </div>
+                {/* Avatar upload */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  className="absolute bottom-0 right-0 w-6 h-6 bg-white rounded-full text-xs cursor-pointer opacity-0 hover:opacity-100"
+                />
               </div>
-            </motion.div>
-          )}
+            )}
+          </div>
         </div>
+
+        {/* Sidebar Menu */}
+        {isMenuOpen && (
+          <motion.div
+            className="fixed top-0 left-0 h-screen w-2/3 md:w-1/3 lg:w-1/4 bg-white z-[9999] shadow-xl flex flex-col justify-between"
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 0.3 }}
+          >
+            <div>
+              <div className="flex justify-end p-4">
+                <button onClick={toggleMenu}>
+                  <Icons.close className="w-7 h-7 text-gray-700" />
+                </button>
+              </div>
+
+              <div className="px-4">
+                <h3 className="text-lg font-semibold mb-2">Статистика</h3>
+                <ul className="space-y-3">
+                  <li><Link to="/trends" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Dashboard #1</Link></li>
+                  <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #2</div></li>
+                  <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #3</div></li>
+                </ul>
+
+                <h3 className="text-lg font-semibold mt-6 mb-2">Чаты</h3>
+                <ul className="space-y-3">
+                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 1</Link></li>
+                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 2</Link></li>
+                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 3</Link></li>
+                  <li><Link to="/" className="block bg-gray-200 text-center rounded-md px-3 py-2 font-medium">+ Новый чат</Link></li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </header>
     </>
   );

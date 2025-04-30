@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
-import { Link } from 'react-router-dom'  // Если используете react-router для навигации
+import { Link } from 'react-router-dom'  
 
 const Register: React.FC = () => {
   const [name, setName] = useState('')
@@ -19,18 +19,18 @@ const Register: React.FC = () => {
       return
     }
 
-    // Включаем индикатор загрузки
+
     setIsLoading(true)
 
-    // Имитируем асинхронную операцию регистрации (например, отправку данных на сервер)
+
     setTimeout(() => {
       console.log('Register:', { name, email, password })
-      // Логика успешной регистрации
-      setIsLoading(false) // Отключаем индикатор загрузки после выполнения
-    }, 2000) // Задержка в 2 секунды для демонстрации
+
+      setIsLoading(false) 
+    }, 2000) 
   }
 
-  // Логика для блокировки кнопки, если одно из полей пустое или пароли не совпадают
+
   const isButtonDisabled = !name || !email || !password || !confirmPassword || password !== confirmPassword
 
   return (
@@ -95,15 +95,15 @@ const Register: React.FC = () => {
           </div>
           <Button
             variant="solid"
-            disabled={isButtonDisabled || isLoading} // Блокируем кнопку во время загрузки или если поля не заполнены
-            isLoading={isLoading} // Передаем флаг загрузки
-            className="w-full bg-gray-400"
+            disabled={isButtonDisabled || isLoading} 
+            isLoading={isLoading} 
+            className="w-full bg-[#4ade80] text-white" 
           >
             {isLoading ? 'Загрузка...' : 'Зарегистрироваться'} 
           </Button>
         </form>
 
-      
+       
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-300">
             У вас уже есть аккаунт?{' '}

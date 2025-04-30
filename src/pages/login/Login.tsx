@@ -1,19 +1,33 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Input from '../../components/input/input'
+import Button from '../../components/button/button'
+import { Icons } from '../../ui/icons/Icons'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Login:', { email, password })
-    // логика авторизации
+    setIsLoading(true)
+
+    try {
+      // симуляция запроса
+      console.log('Login:', { email, password })
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      // здесь логика авторизации
+    } finally {
+      setIsLoading(false)
+    }
   }
 
+  // Логика для блокировки кнопки, если email или password пустые
+  const isButtonDisabled = !email || !password
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4">
       <motion.div
         className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl max-w-md w-full"
         initial={{ opacity: 0, y: 40 }}
@@ -48,12 +62,15 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
+          <Button
+            variant="solid"
+            isLoading={isLoading}
+            icon={<Icons.user className="w-5 h-5" />}
+            disabled={isButtonDisabled}  // Блокируем кнопку, если поля пустые
+            className='bg-gray-400'
           >
             Войти
-          </button>
+          </Button>
         </form>
       </motion.div>
     </div>

@@ -1,7 +1,7 @@
 import{ ReactNode } from "react";
 
  //button.tsx
- export  type ButtonProps = {
+ export type ButtonProps = {
   children: ReactNode;
   variant?: "solid" | "outline" | "ghost";
   isLoading?: boolean;

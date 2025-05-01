@@ -75,7 +75,7 @@ const Header: React.FC = () => {
         toast.warn("Требуется авторизация");
         return;
       }
-      const { data } = await axios.post(`${API_URL}/api/conversation`, {}, {
+      const { data } = await axios.post(`${API_URL}/conversation`, {}, {
         withCredentials: true,
         headers: { Authorization: token },
       });

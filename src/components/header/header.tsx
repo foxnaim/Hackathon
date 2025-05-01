@@ -79,7 +79,7 @@ const Header: React.FC = () => {
         withCredentials: true,
         headers: { Authorization: token },
       });
-      navigate(`/conversation/${data.id}`);
+      navigate(`/conversation/${data}`);
       toast.success("Чат создан успешно!");
     } catch {
       toast.error("Ошибка при создании чата");

@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<{ username?: string; email?: string; avatar?: string | null } | null>(null);
+  const [chats, setChats] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +41,22 @@ const Header: React.FC = () => {
         navigate("/register");
       }
     };
+
+    const fetchChats = async () => {
+      try {
+        const token = Cookies.get("authorization");
+        const { data } = await axios.get(`${API_URL}/conversation`, {
+          withCredentials: true,
+          headers: { Authorization: token },
+        });
+        setChats(data); // предполагаем, что data — массив чатов
+      } catch {
+        toast.error("Не удалось загрузить чаты");
+      }
+    };
+
     fetchUser();
+    fetchChats();
   }, [navigate]);
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +84,19 @@ const Header: React.FC = () => {
     }
   };
 
+  const fetchChats = async () => {
+    try {
+      const token = Cookies.get("authorization");
+      const { data } = await axios.get(`${API_URL}/conversation`, {
+        withCredentials: true,
+        headers: { Authorization: token },
+      });
+      setChats(data);
+    } catch {
+      toast.error("Не удалось загрузить чаты");
+    }
+  };
+
   const handleCreateChat = async () => {
     try {
       const token = Cookies.get("authorization");
@@ -79,6 +108,7 @@ const Header: React.FC = () => {
         withCredentials: true,
         headers: { Authorization: token },
       });
+      await fetchChats(); // обновляем список после создания
       navigate(`/conversation/${data}`);
       toast.success("Чат создан успешно!");
     } catch {
@@ -157,11 +187,13 @@ const Header: React.FC = () => {
 
                 <h3 className="text-lg font-semibold my-4">Чаты</h3>
                 <ul className="space-y-3">
-                  <li>
-                    <Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
-                      Чат 1
-                    </Link>
-                  </li>
+                  {chats.map((chat) => (
+                    <li key={chat.id}>
+                      <Link to={`/conversation/${chat}`} className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
+                        {chat.name || `Чат `}
+                      </Link>
+                    </li>
+                  ))}
                   <li>
                     <button
                       onClick={handleCreateChat}

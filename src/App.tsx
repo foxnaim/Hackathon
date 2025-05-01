@@ -30,6 +30,7 @@ function App() {
             <Route path="/Trends" element={<Trends />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
+            <Route path="chat/:conversationId" element={<Home/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
       </div>

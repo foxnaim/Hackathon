@@ -49,7 +49,7 @@ const Header: React.FC = () => {
           withCredentials: true,
           headers: { Authorization: token },
         });
-        setChats(data); // предполагаем, что data — массив чатов
+        setChats(data);
       } catch {
         toast.error("Не удалось загрузить чаты");
       }
@@ -108,7 +108,7 @@ const Header: React.FC = () => {
         withCredentials: true,
         headers: { Authorization: token },
       });
-      await fetchChats(); // обновляем список после создания
+      await fetchChats();
       navigate(`/conversation/${data}`);
       toast.success("Чат создан успешно!");
     } catch {
@@ -167,15 +167,15 @@ const Header: React.FC = () => {
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex justify-between items-end p-4">
+              <div className="flex justify-between items-center p-4">
                 <button onClick={toggleMenu}>
                   <Icons.close className="w-7 h-7 text-gray-700" />
                 </button>
               </div>
 
-              <nav className="px-4 flex-1">
-                <h3 className="text-lg font-semibold my-4">Статистика</h3>
-                <ul className="space-y-3">
+              <div className="flex-1 overflow-y-auto px-4">
+                <h3 className="text-lg font-semibold mb-4">Статистика</h3>
+                <ul className="space-y-3 mb-6">
                   <li>
                     <Link to="/trends" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
                       Dashboard #1
@@ -183,29 +183,25 @@ const Header: React.FC = () => {
                   </li>
                 </ul>
 
-                <div className="border border-gray-300 my-6" />
-
-                <h3 className="text-lg font-semibold my-4">Чаты</h3>
+                <h3 className="text-lg font-semibold mb-4">Чаты</h3>
                 <ul className="space-y-3">
                   {chats.map((chat) => (
                     <li key={chat.id}>
                       <Link to={`/conversation/${chat}`} className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
-                        {chat.name || `Чат `}
+                        {chat.name || `Чат`}
                       </Link>
                     </li>
                   ))}
-                  <li>
-                    <button
-                      onClick={handleCreateChat}
-                      className="w-full bg-green-400 hover:bg-green-500 text-white text-center rounded-md px-3 py-2 font-medium"
-                    >
-                      + Новый чат
-                    </button>
-                  </li>
                 </ul>
-              </nav>
+              </div>
 
-              <div className="p-4 border-t border-gray-300">
+              <div className="p-4 border-t border-gray-300 flex flex-col gap-2">
+                <button
+                  onClick={handleCreateChat}
+                  className="w-full bg-green-400 hover:bg-green-500 text-white rounded-md px-3 py-2 font-medium"
+                >
+                  + Новый чат
+                </button>
                 <button
                   onClick={handleLogout}
                   className="w-full bg-red-500 hover:bg-red-600 text-white rounded-md px-3 py-2 font-medium"

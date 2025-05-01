@@ -95,7 +95,7 @@ const Header: React.FC = () => {
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <header className="w-full h-16 bg-white shadow-sm shadow-gray-200 z-50">
-        <div className="px-4 sm:px-6 max-w-7xl mx-auto h-full flex items-center justify-between">
+        <div className="px-4 sm:px-6 h-full flex items-center justify-between">
           {/* Menu Button */}
           <button onClick={toggleMenu} className="flex items-center">
             <Icons.menu className="w-6 h-6 text-gray-600" />
@@ -150,17 +150,18 @@ const Header: React.FC = () => {
               <div className="px-4">
                 <h3 className="text-lg font-semibold my-6">Статистика</h3>
                 <ul className="space-y-3">
-                  <li><Link to="/trends" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Dashboard #1</Link></li>
-                  <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #2</div></li>
-                  <li><div className="block bg-gray-100 rounded-md px-3 py-2">Dashboard #3</div></li>
+                  <li>
+                    <Link to="/trends" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Dashboard #1</Link>
+                  </li>
                 </ul>
-                <div className="border border-black mt-10" />
+                <div className="border border-gray-200 mt-10" />
                 <h3 className="text-lg font-semibold my-6">Чаты</h3>
                 <ul className="space-y-3">
-                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 1</Link></li>
-                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 2</Link></li>
-                  <li><Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 3</Link></li>
-                  <li><Link to="/" className="block bg-[#4ade80] text-white text-center rounded-md px-3 py-2 font-medium">+ Новый чат</Link></li>
+                  <li>
+                    <Link to="/" className="block bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">Чат 1</Link>
+                  </li>
+
+                    <Link to="/" className="block bg-[#4ade80] text-white text-center rounded-md px-3 py-2 font-medium">+ Новый чат</Link>
                 </ul>
               </div>
             </div>

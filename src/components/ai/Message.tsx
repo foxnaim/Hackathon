@@ -17,10 +17,10 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full`}>
       <div
-        className={`max-w-[80%] p-3 rounded-xl shadow-md whitespace-pre-wrap ${
+        className={`max-w-[80%] p-3 whitespace-pre-wrap ${
           isUser
-            ? 'bg-gray-100 text-black rounded-br-none'
-            : 'bg-gray-200 text-gray-800 rounded-bl-none'
+            ? 'bg-gray-100 shadow-lg text-black rounded-br-none'
+            : 'text-gray-800 '
         }`}
       >
         <ReactMarkdown

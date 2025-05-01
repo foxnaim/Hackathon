@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import Cookies from 'js-cookie'
 import Input from '../../components/input/input'
 import Button from '../../components/button/button'
 import { Link, useNavigate } from 'react-router-dom'
@@ -29,7 +28,7 @@ const Register: React.FC = () => {
     setIsLoading(true)
 
     try {
-      const response = await axios.post(`${API_URL}/users/register`, {
+      await axios.post(`${API_URL}/users/register`, {
         username,
         email,
         password,
@@ -69,7 +68,6 @@ const Register: React.FC = () => {
               placeholder="Ваше имя"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              autoComplete="name"  // Added autoComplete for name
             />
           </div>
           <div>
@@ -82,8 +80,7 @@ const Register: React.FC = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"  // Added autoComplete for email
-            />
+              />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -95,7 +92,6 @@ const Register: React.FC = () => {
               placeholder="Придумайте пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"  // Added autoComplete for password
             />
           </div>
           <div>
@@ -108,7 +104,6 @@ const Register: React.FC = () => {
               placeholder="Повторите пароль"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              autoComplete="new-password"  // Added autoComplete for confirm password
             />
           </div>
           <Button

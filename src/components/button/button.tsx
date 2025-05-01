@@ -18,9 +18,9 @@ const Button: React.FC<ButtonProps> = ({
     "w-full flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
 
   const variants: Record<string, string> = {
-    solid: "text-white disabled:text-gray-500 disabled:cursor-not-allowed",
+    solid: "text-white disabled:bg-green-300 disabled:cursor-not-allowed",
     outline: "border-2 border-primary text-primary disabled:border-gray-300 disabled:text-gray-400",
-    ghost: "text-primary hover:bg-indigo-50 disabled:text-gray-400 disabled:bg-transparent",
+    ghost: "text-white disabled:bg-transparent disabled:cursor-not-allowed",
   };
 
   const SpinnerIcon = Icons.spinner;

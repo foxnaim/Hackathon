@@ -5,15 +5,16 @@ import Cookies from "js-cookie";
 import Button from "../button/button";
 import { Icons } from "../../ui/icons/Icons";
 import { API_URL } from "../../api/context";
+import { useParams } from "react-router-dom";
 
 type MessageType = {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  link: string | null;
+  content: string;
+  role: "user" | "assistant";
+  conversationId?: string
 };
 
 const ChatComponent: React.FC = () => {
+  let { conversationId } = useParams()
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,23 +29,7 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  const getMessages = async () => {
-    try {
-      const token = Cookies.get("authorization");
-      const response = await axios.get(`${API_URL}/message/`, {
-        withCredentials: true,
-        headers: { Authorization: token },
-      });
-      setMessages(response.data);
-      
-      // Optionally set the conversationId from the response if the server provides it
-      if (response.data.conversationId) {
-        setConversationId(response.data.conversationId);
-      }
-    } catch (error) {
-      toast.error("Не удалось загрузить сообщения");
-    }
-  };
+  console.log(conversationId);  
 
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
@@ -77,10 +62,9 @@ const ChatComponent: React.FC = () => {
       setIsLoading(true);
 
       const newMessage: MessageType = {
-        id: Date.now(),
-        text: message.trim(),
-        sender: "user",
-        link: null,
+        content: message.trim(),
+        role: "user",
+        conversationId: conversationId
       };
 
       setMessages((prev) => [...prev, newMessage]);
@@ -98,9 +82,25 @@ const ChatComponent: React.FC = () => {
   };
 
   useEffect(() => {
-    getMessages();
-  }, []);
-
+    const fetchMessages = async () => {
+  
+      try {
+        const token = Cookies.get("authorization");
+        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
+          withCredentials: true,
+          headers: { Authorization: token },
+        });
+        setMessages(response.data);
+        console.log(messages);
+      } catch (error) {
+        console.error(error);
+        toast.error("Не удалось загрузить сообщения");
+      }
+    };
+  
+    fetchMessages();
+  }, [conversationId]);  
+  
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
@@ -116,22 +116,16 @@ const ChatComponent: React.FC = () => {
       >
         {messages.map((msg) => (
           <div
-            key={msg.id}
-            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+            
+            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
               className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
-                msg.sender === "user" ? "bg-gray-100" : ""
+                msg.role === "user" ? "bg-gray-100" : ""
               }`}
             >
-              {msg.text}
-              {msg.link && (
-                <div>
-                  <a href={msg.link} className="underline text-sm">
-                    Перейти
-                  </a>
-                </div>
-              )}
+              {msg.content}
+              
             </div>
           </div>
         ))}

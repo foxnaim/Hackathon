@@ -17,6 +17,7 @@ const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [conversationId, setConversationId] = useState<string | null>(null); // Added state for conversationId
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +36,11 @@ const ChatComponent: React.FC = () => {
         headers: { Authorization: token },
       });
       setMessages(response.data);
+      
+      // Optionally set the conversationId from the response if the server provides it
+      if (response.data.conversationId) {
+        setConversationId(response.data.conversationId);
+      }
     } catch (error) {
       toast.error("Не удалось загрузить сообщения");
     }
@@ -43,10 +49,16 @@ const ChatComponent: React.FC = () => {
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
       const token = Cookies.get("authorization");
-      const response = await axios.post(`${API_URL}/message`, newMessage, {
+
+      // Make sure conversationId is included in the request payload
+      const response = await axios.post(`${API_URL}/message/`, {
+        ...newMessage,
+        conversationId, 
+      }, {
         withCredentials: true,
         headers: { Authorization: token },
       });
+
       const botReply: MessageType = response.data;
       setMessages((prev) => [...prev, botReply]);
     } catch (error) {
@@ -72,6 +84,8 @@ const ChatComponent: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, newMessage]);
+
+      // Pass conversationId along with the message to the server
       sendMessageToServer(newMessage);
     }
   };

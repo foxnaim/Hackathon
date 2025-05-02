@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 import Button from "../button/button";
 import { Icons } from "../../ui/icons/Icons";
+import { API_URL } from "../../api/context";
 
 type MessageType = {
   id: number;
@@ -9,54 +13,8 @@ type MessageType = {
   link: string | null;
 };
 
-const initialMessages: MessageType[] = [
-  { id: 1, text: "Привет, подскажи мне самые перспективные ниши в стартапе", sender: "user", link: null },
-  {
-    id: 2,
-    text: `Привет! Вот **топ-3 самые востребованные ниши для стартапов в 2025 году**, исходя из глобальных трендов, инвестиций и потребностей рынка:
-
----
-
-### 🔹 1. **AI-сервисы для B2B**
-**Почему востребовано:** Бизнесы активно внедряют ИИ для повышения эффективности. Особенно популярны:
-- Автоматизация документооборота и анализа данных
-- Генерация контента, email-ответов, транскрибация
-- Внутренние чат-боты и агенты
-
-**Пример:** сервис, который с помощью ИИ обрабатывает входящие письма и автоматически формирует предложения/ответы.
-
----
-
-### 🔹 2. **Здоровье и Digital Health**
-**Почему востребовано:** Люди всё больше заботятся о здоровье, особенно в онлайне.
-- Мобильные трекеры здоровья
-- Умные напоминалки о приёме лекарств
-- Психологическая поддержка через чат/видео
-
-**Пример:** приложение для мониторинга ментального состояния с ИИ-анализом настроения.
-
----
-
-### 🔹 3. **EdTech с ИИ**
-**Почему востребовано:** Образование становится персонализированным и гибким.
-- Платформы с адаптивным обучением
-- Генерация тестов и курсов на основе ИИ
-- Ассистенты для студентов и учителей
-
-**Пример:** ИИ-платформа, создающая курсы под пользователя за 5 минут.
-
----
-
-Хочешь, выгружу статистику по перспективным нишам в стартапе`,
-    sender: "bot",
-    link: null,
-  },
-  { id: 3, text: "Да, скинь пожалуйста топ 3 перспективных ниш в стартапе", sender: "user", link: null },
-  { id: 4, text: "Конечно! Вот актуальная статистика по трём наиболее перспективным нишам для стартапов в 2025 году:", sender: "bot", link: "/trends" },
-];
-
 const ChatComponent: React.FC = () => {
-  const [messages, setMessages] = useState<MessageType[]>(initialMessages);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,6 +24,39 @@ const ChatComponent: React.FC = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const getMessages = async () => {
+    try {
+      const token = Cookies.get("authorization");
+      const response = await axios.get(`${API_URL}/message`, {
+        withCredentials: true,
+        headers: { Authorization: token },
+      });
+      setMessages(response.data);
+    } catch (error) {
+      toast.error("Не удалось загрузить сообщения");
+    }
+  };
+
+  const sendMessageToServer = async (newMessage: MessageType) => {
+    try {
+      const token = Cookies.get("authorization");
+      const response = await axios.post(`${API_URL}/message`, newMessage, {
+        withCredentials: true,
+        headers: { Authorization: token },
+      });
+      const botReply: MessageType = response.data;
+      setMessages((prev) => [...prev, botReply]);
+    } catch (error) {
+      toast.error("Ошибка при отправке сообщения");
+    } finally {
+      setIsLoading(false);
+      setMessage("");
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
     }
   };
 
@@ -81,22 +72,7 @@ const ChatComponent: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, newMessage]);
-
-      setTimeout(() => {
-        const botReply: MessageType = {
-          id: Date.now() + 1,
-          text: `Спасибо за сообщение! 🚀 Я его получил: "${message.trim()}"`,
-          sender: "bot",
-          link: null,
-        };
-
-        setMessages((prev) => [...prev, botReply]);
-        setIsLoading(false);
-        setMessage("");
-        if (textareaRef.current) {
-          textareaRef.current.style.height = "auto";
-        }
-      }, 1500);
+      sendMessageToServer(newMessage);
     }
   };
 
@@ -108,12 +84,22 @@ const ChatComponent: React.FC = () => {
   };
 
   useEffect(() => {
+    getMessages();
+  }, []);
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div
+        className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "#9CA3AF #E5E7EB",
+        }}
+      >
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -155,7 +141,7 @@ const ChatComponent: React.FC = () => {
                 handleInput();
               }}
               onKeyDown={handleKeyDown}
-              className="flex-1 px-4 text-sm p-2 w-[500px] bg-gary-300 rounded-md resize-none focus:outline-none overflow-y-auto"
+              className="flex-1 px-4 text-sm p-2 w-[700px] rounded-md resize-none focus:outline-none overflow-y-auto"
               style={{ minHeight: "50px", maxHeight: "150px" }}
             />
           </div>

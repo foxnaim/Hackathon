@@ -13,6 +13,7 @@ const Header: React.FC = () => {
   const [user, setUser] = useState<{ username?: string; email?: string; avatar?: string | null } | null>(null);
   const [chats, setChats] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -59,30 +60,32 @@ const Header: React.FC = () => {
     fetchChats();
   }, [navigate]);
 
-  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("avatar", file);
-      try {
-        setLoading(true);
-        const token = Cookies.get("authorization");
-        const { data } = await axios.post(`${API_URL}/users/upload-avatar`, formData, {
-          withCredentials: true,
-          headers: {
-            Authorization: token,
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        setUser((prev) => ({ ...prev, avatar: data.avatarUrl }));
-        toast.success("Фото профиля обновлено");
-      } catch {
-        toast.error("Ошибка при загрузке фото");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
+  
+
+  // const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append("avatar", file);
+  //     try {
+  //       setLoading(true);
+  //       const token = Cookies.get("authorization");
+  //       const { data } = await axios.post(`${API_URL}/users/upload-avatar`, formData, {
+  //         withCredentials: true,
+  //         headers: {
+  //           Authorization: token,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       });
+  //       setUser((prev) => ({ ...prev, avatar: data.avatarUrl }));
+  //       toast.success("Фото профиля обновлено");
+  //     } catch {
+  //       toast.error("Ошибка при загрузке фото");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
 
   const fetchChats = async () => {
     try {
@@ -116,6 +119,10 @@ const Header: React.FC = () => {
     }
   };
 
+  const toogleUserMenu = () => {
+    setUserMenu(!userMenu);
+  }
+
   const handleLogout = () => {
     Cookies.remove("authorization");
     setUser(null);
@@ -127,7 +134,7 @@ const Header: React.FC = () => {
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <header className="w-full h-16 bg-white shadow-sm shadow-gray-200 z-50">
-        <div className="px-4 sm:px-6 h-full flex items-center justify-between">
+        <div className="relative px-4 sm:px-6 h-full flex items-center justify-between">
           <button onClick={toggleMenu} className="flex items-center">
             <Icons.menu className="w-6 h-6 text-gray-600" />
           </button>
@@ -135,7 +142,7 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-2 relative">
             {user && (
               <label className="relative cursor-pointer">
-                <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-300">
+                <div onClick={toogleUserMenu} className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-300">
                   {loading ? (
                     <div className="animate-pulse w-full h-full bg-gray-300" />
                   ) : user.avatar ? (
@@ -146,16 +153,22 @@ const Header: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarChange}
-                  className="hidden"
-                  disabled={loading}
-                />
               </label>
             )}
           </div>
+          {userMenu ? (
+            <>
+              <div className="absolute right-6 top-20 border-2 border-gray-300 rounded-xl w-48 p-2">
+              <button
+                  onClick={handleLogout}
+                  className="w-full hover:bg-gray-200 text-start p-2 rounded-md flex justify-start items-center gap-1 "
+                >
+                  <span><Icons.logout className="size-6 text-gray-700"/></span>
+                  Выйти
+              </button>
+              </div>
+            </>
+          ) : null}
         </div>
 
         <AnimatePresence>

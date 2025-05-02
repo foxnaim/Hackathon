@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-
+import { IoIosLogOut } from "react-icons/io";
 
 export const Icons = {
   spinner: AiOutlineLoading3Quarters,
@@ -24,4 +24,5 @@ export const Icons = {
   close: IoCloseSharp,
   arrow: IoIosArrowForward,
   arrowLeft: AiOutlineArrowLeft,
+  logout: IoIosLogOut
 };

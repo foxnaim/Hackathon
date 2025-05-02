@@ -215,12 +215,6 @@ const Header: React.FC = () => {
                 >
                   + Новый чат
                 </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white rounded-md px-3 py-2 font-medium"
-                >
-                  Выйти
-                </button>
               </div>
             </motion.div>
           )}

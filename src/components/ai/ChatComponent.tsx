@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 type MessageType = {
   content: string;
   role: "user" | "assistant";
-  conversationId?: string;
 };
 
 const ChatComponent: React.FC = () => {
@@ -28,7 +27,10 @@ const ChatComponent: React.FC = () => {
     }
   };
 
+  /** Загружаем сообщения с сервера */
   const fetchMessages = async () => {
+    if (!conversationId) return;
+
     try {
       const token = Cookies.get("authorization");
       const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
@@ -36,14 +38,14 @@ const ChatComponent: React.FC = () => {
         headers: { Authorization: token },
       });
 
-      // ⏩ предполагаем, что сервер возвращает { messages: [...] }
-      setMessages(response.data.messages);
+      setMessages(response.data.messages ?? []);
     } catch (error) {
-      console.error(error);
       toast.error("Не удалось загрузить сообщения");
+      setMessages([]); // fallback
     }
   };
 
+  /** Отправляем сообщение на сервер */
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
       const token = Cookies.get("authorization");
@@ -60,8 +62,7 @@ const ChatComponent: React.FC = () => {
         }
       );
 
-      const botReply: MessageType = response.data;
-      setMessages((prev) => [...prev, botReply]);
+      setMessages((prev) => [...prev, response.data]);
     } catch (error) {
       toast.error("Ошибка при отправке сообщения");
     } finally {
@@ -73,6 +74,7 @@ const ChatComponent: React.FC = () => {
     }
   };
 
+  /** Локально добавляем сообщение и отправляем его */
   const sendMessage = () => {
     if (message.trim()) {
       setIsLoading(true);
@@ -80,14 +82,17 @@ const ChatComponent: React.FC = () => {
       const newMessage: MessageType = {
         content: message.trim(),
         role: "user",
-        conversationId,
       };
 
+      // Локально добавляем сообщение
       setMessages((prev) => [...prev, newMessage]);
+
+      // Отправляем сообщение на сервер
       sendMessageToServer(newMessage);
     }
   };
 
+  /** Отправка по Enter */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -95,6 +100,7 @@ const ChatComponent: React.FC = () => {
     }
   };
 
+  
   useEffect(() => {
     fetchMessages();
   }, [conversationId]);
@@ -105,23 +111,10 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div
-        className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-        style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "#9CA3AF #E5E7EB",
-        }}
-      >
+      <div className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
-                msg.role === "user" ? "bg-gray-100" : ""
-              }`}
-            >
+          <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap bg-gray-100`}>
               {msg.content}
             </div>
           </div>
@@ -134,7 +127,7 @@ const ChatComponent: React.FC = () => {
         <div ref={bottomRef} />
       </div>
 
-      <div className="p-4 md:p-8 rounded-xl shadow-2xl shadow-green-400 mb-5">
+      <div className="p-4 md:p-8 rounded-xl shadow-2xl shadow-pink-200 mb-5">
         <div className="flex space-x-3">
           <textarea
             ref={textareaRef}
@@ -145,7 +138,7 @@ const ChatComponent: React.FC = () => {
               handleInput();
             }}
             onKeyDown={handleKeyDown}
-            className="flex-1 px-4 text-sm p-2 w-full md:w-[700px] rounded-md resize-none focus:outline-none overflow-y-auto"
+            className="flex-1 px-4 text-sm p-2 w-full md:w-[700px] rounded-md resize-none focus:outline-none"
             style={{ minHeight: "50px", maxHeight: "150px" }}
           />
           <Button

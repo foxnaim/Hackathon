@@ -10,15 +10,14 @@ import { useParams } from "react-router-dom";
 type MessageType = {
   content: string;
   role: "user" | "assistant";
-  conversationId?: string
+  conversationId?: string;
 };
 
 const ChatComponent: React.FC = () => {
-  let { conversationId } = useParams()
+  let { conversationId } = useParams();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [conversationId, setConversationId] = useState<string | null>(null); // Added state for conversationId
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -29,20 +28,37 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  console.log(conversationId);  
+  const fetchMessages = async () => {
+    try {
+      const token = Cookies.get("authorization");
+      const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
+        withCredentials: true,
+        headers: { Authorization: token },
+      });
+
+      // ⏩ предполагаем, что сервер возвращает { messages: [...] }
+      setMessages(response.data.messages);
+    } catch (error) {
+      console.error(error);
+      toast.error("Не удалось загрузить сообщения");
+    }
+  };
 
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
       const token = Cookies.get("authorization");
 
-      // Make sure conversationId is included in the request payload
-      const response = await axios.post(`${API_URL}/message/`, {
-        ...newMessage,
-        conversationId, 
-      }, {
-        withCredentials: true,
-        headers: { Authorization: token },
-      });
+      const response = await axios.post(
+        `${API_URL}/message/`,
+        {
+          ...newMessage,
+          conversationId,
+        },
+        {
+          withCredentials: true,
+          headers: { Authorization: token },
+        }
+      );
 
       const botReply: MessageType = response.data;
       setMessages((prev) => [...prev, botReply]);
@@ -64,12 +80,10 @@ const ChatComponent: React.FC = () => {
       const newMessage: MessageType = {
         content: message.trim(),
         role: "user",
-        conversationId: conversationId
+        conversationId,
       };
 
       setMessages((prev) => [...prev, newMessage]);
-
-      // Pass conversationId along with the message to the server
       sendMessageToServer(newMessage);
     }
   };
@@ -82,25 +96,9 @@ const ChatComponent: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchMessages = async () => {
-  
-      try {
-        const token = Cookies.get("authorization");
-        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
-          withCredentials: true,
-          headers: { Authorization: token },
-        });
-        setMessages(response.data);
-        console.log(messages);
-      } catch (error) {
-        console.error(error);
-        toast.error("Не удалось загрузить сообщения");
-      }
-    };
-  
     fetchMessages();
-  }, [conversationId]);  
-  
+  }, [conversationId]);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
@@ -114,9 +112,9 @@ const ChatComponent: React.FC = () => {
           scrollbarColor: "#9CA3AF #E5E7EB",
         }}
       >
-        {messages.map((msg) => (
+        {messages.map((msg, index) => (
           <div
-            
+            key={index}
             className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
@@ -125,7 +123,6 @@ const ChatComponent: React.FC = () => {
               }`}
             >
               {msg.content}
-              
             </div>
           </div>
         ))}
@@ -137,28 +134,26 @@ const ChatComponent: React.FC = () => {
         <div ref={bottomRef} />
       </div>
 
-      <div className="p-8 rounded-xl shadow-2xl shadow-green-400 mb-5">
+      <div className="p-4 md:p-8 rounded-xl shadow-2xl shadow-green-400 mb-5">
         <div className="flex space-x-3">
-          <div>
-            <textarea
-              ref={textareaRef}
-              placeholder="Спросите что-нибудь..."
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-                handleInput();
-              }}
-              onKeyDown={handleKeyDown}
-              className="flex-1 px-4 text-sm p-2 w-[700px] rounded-md resize-none focus:outline-none overflow-y-auto"
-              style={{ minHeight: "50px", maxHeight: "150px" }}
-            />
-          </div>
+          <textarea
+            ref={textareaRef}
+            placeholder="Спросите что-нибудь..."
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              handleInput();
+            }}
+            onKeyDown={handleKeyDown}
+            className="flex-1 px-4 text-sm p-2 w-full md:w-[700px] rounded-md resize-none focus:outline-none overflow-y-auto"
+            style={{ minHeight: "50px", maxHeight: "150px" }}
+          />
           <Button
             variant="ghost"
             onClick={sendMessage}
             isLoading={isLoading}
             disabled={isLoading || !message.trim()}
-            className="flex w-5 h-5 bg-transparent p-3 rounded-md"
+            className="flex w-10 h-10 bg-transparent p-3 rounded-md"
           >
             <Icons.send className="w-6 h-6 text-gray-500" />
           </Button>

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import Button from "../button/button"; 
+import React, { useState, useRef, useEffect } from "react";
+import Button from "../button/button";
 import { Icons } from "../../ui/icons/Icons";
 
 type MessageType = {
@@ -57,9 +57,10 @@ const initialMessages: MessageType[] = [
 
 const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-  const [message, setMessage] = useState<string>(""); 
-  const [isLoading, setIsLoading] = useState<boolean>(false); 
+  const [message, setMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const handleInput = () => {
     if (textareaRef.current) {
@@ -95,7 +96,7 @@ const ChatComponent: React.FC = () => {
         if (textareaRef.current) {
           textareaRef.current.style.height = "auto";
         }
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -106,35 +107,43 @@ const ChatComponent: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
   return (
     <div className="flex flex-col h-screen">
-      <div className="bg-gray-100 p-4 text-lg font-semibold text-center rounded-b-md">
-        💬 Чат с AI-ассистентом
-      </div>
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`p-3 rounded-md max-w-lg ${
-              msg.sender === "user" ? "bg-blue-200 self-end" : "bg-gray-300 self-start"
-            }`}
+            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
           >
-            <div className="whitespace-pre-wrap">{msg.text}</div>
-            {msg.link && (
-              <a href={msg.link} className="text-blue-600 underline text-sm">
-                Перейти
-              </a>
-            )}
+            <div
+              className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
+                msg.sender === "user" ? "bg-gray-100" : ""
+              }`}
+            >
+              {msg.text}
+              {msg.link && (
+                <div>
+                  <a href={msg.link} className="underline text-sm">
+                    Перейти
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         ))}
         {isLoading && (
-          <div className="text-sm text-gray-500 animate-pulse">Бот печатает...</div>
+          <div className="flex justify-start">
+            <div className="text-sm text-gray-500 animate-pulse">Бот печатает...</div>
+          </div>
         )}
+        <div ref={bottomRef} />
       </div>
 
-      {/* НЕ ТРОГАННАЯ ЧАСТЬ */}
-      <div className="p-8 rounded-t-xl shadow-2xl">
+      <div className="p-8 rounded-xl shadow-2xl shadow-green-400 mb-5">
         <div className="flex space-x-3">
           <div>
             <textarea

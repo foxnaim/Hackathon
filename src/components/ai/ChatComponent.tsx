@@ -31,7 +31,7 @@ const ChatComponent: React.FC = () => {
   const getMessages = async () => {
     try {
       const token = Cookies.get("authorization");
-      const response = await axios.get(`${API_URL}/message`, {
+      const response = await axios.get(`${API_URL}/message/`, {
         withCredentials: true,
         headers: { Authorization: token },
       });

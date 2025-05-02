@@ -1,12 +1,11 @@
 // icons.ts
-import { AiOutlineLoading3Quarters, AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineLoading3Quarters, AiOutlineCheck, AiOutlineArrowLeft } from "react-icons/ai";
 import { FiMail, FiLock, FiUser, FiPhone, FiSearch, FiChevronDown, FiChevronUp, FiAirplay } from "react-icons/fi";
 import { LuSendHorizontal } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
-import { IoIosArrowForward } from "react-icons/io";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosArrowForward, IoIosLogOut } from "react-icons/io";
+import { MdOutlineMoreVert } from "react-icons/md";
 
 export const Icons = {
   spinner: AiOutlineLoading3Quarters,
@@ -24,5 +23,6 @@ export const Icons = {
   close: IoCloseSharp,
   arrow: IoIosArrowForward,
   arrowLeft: AiOutlineArrowLeft,
-  logout: IoIosLogOut
+  logout: IoIosLogOut,
+  more: MdOutlineMoreVert,
 };

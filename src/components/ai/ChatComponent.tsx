@@ -6,20 +6,21 @@ import Button from "../button/button";
 import { Icons } from "../../ui/icons/Icons";
 import { API_URL } from "../../api/context";
 import { useParams } from "react-router-dom";
+import { useScrollToBottom } from "../../hook/ScrollBar";
 
 type MessageType = {
   content: string;
   role: "user" | "assistant";
-  conversationId?: string
+  conversationId?: string;
 };
 
 const ChatComponent: React.FC = () => {
-  let { conversationId } = useParams()
+  let { conversationId } = useParams();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useScrollToBottom([messages, isLoading]);
 
   const handleInput = () => {
     if (textareaRef.current) {
@@ -27,8 +28,6 @@ const ChatComponent: React.FC = () => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
-
-  console.log(conversationId);  
 
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
@@ -57,7 +56,7 @@ const ChatComponent: React.FC = () => {
       const newMessage: MessageType = {
         content: message.trim(),
         role: "user",
-        conversationId: conversationId
+        conversationId: conversationId,
       };
 
       setMessages((prev) => [...prev, newMessage]);
@@ -74,41 +73,41 @@ const ChatComponent: React.FC = () => {
 
   useEffect(() => {
     const fetchMessages = async () => {
-  
       try {
         const token = Cookies.get("authorization");
-        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
-          withCredentials: true,
-          headers: { Authorization: token },
-        });
+        const response = await axios.get(
+          `${API_URL}/conversation/${conversationId}`,
+          {
+            withCredentials: true,
+            headers: { Authorization: token },
+          }
+        );
         setMessages(response.data);
-        console.log(messages);
       } catch (error) {
         console.error(error);
         toast.error("Не удалось загрузить сообщения");
       }
     };
-  
+
     fetchMessages();
-  }, [conversationId]);  
-  
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading]);
+  }, [conversationId]);
 
   return (
     <div className="flex flex-col h-screen">
       <div
+        ref={containerRef}
         className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "#9CA3AF #E5E7EB",
         }}
       >
-        {messages.map((msg) => (
+        {messages.map((msg, index) => (
           <div
-            
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            key={index}
+            className={`flex ${
+              msg.role === "user" ? "justify-end" : "justify-start"
+            }`}
           >
             <div
               className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
@@ -116,19 +115,19 @@ const ChatComponent: React.FC = () => {
               }`}
             >
               {msg.content}
-              
             </div>
           </div>
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="text-sm text-gray-500 animate-pulse">Бот печатает...</div>
+            <div className="text-sm text-gray-500 animate-pulse">
+              Бот печатает...
+            </div>
           </div>
         )}
-        <div ref={bottomRef} />
       </div>
 
-      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-lg shadow-pink-200 mb-5">
+      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl shadow-black-600 mb-5">
         <div className="flex justify-between items-start">
           <div>
             <textarea
@@ -140,7 +139,7 @@ const ChatComponent: React.FC = () => {
                 handleInput();
               }}
               onKeyDown={handleKeyDown}
-              className=" px-4 text-sm rounded-md resize-none focus:outline-none overflow-y-auto"
+              className="px-4 text-sm rounded-md resize-none focus:outline-none overflow-y-auto"
               style={{ minHeight: "50px", maxHeight: "150px" }}
             />
           </div>

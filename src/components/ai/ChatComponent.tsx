@@ -128,7 +128,7 @@ const ChatComponent: React.FC = () => {
       {/* Нижняя панель с полем и кнопкой */}
       <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl shadow-black-300 mb-5">
         <div className="flex justify-between items-start">
-          <div className="flex-1 mr-2">
+          <div className="flex-1 mr-4">
             <textarea
               ref={textareaRef}
               placeholder="Спросите что-нибудь..."
@@ -138,7 +138,7 @@ const ChatComponent: React.FC = () => {
                 handleInput();
               }}
               onKeyDown={handleKeyDown}
-              className="px-4 text-sm w-full rounded-md resize-none focus:outline-none overflow-y-auto"
+              className="px-4 text-sm w-full  rounded-md resize-none focus:outline-none overflow-y-auto"
               style={{ minHeight: "50px", maxHeight: "150px" }}
             />
           </div>

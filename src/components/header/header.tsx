@@ -174,7 +174,7 @@ const Header: React.FC = () => {
                         </button>
                       </div>
                       {openMenuIndex === index && (
-                        <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-36 z-10">
+                        <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-52 z-10">
                           <button
                             onClick={() => navigate(`/conversation/${chat.id}/edit`)}
                             className="flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-gray-200"

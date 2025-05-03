@@ -60,6 +60,7 @@ const ChatComponent: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, newMessage]);
+
       sendMessageToServer(newMessage);
     }
   };
@@ -75,17 +76,17 @@ const ChatComponent: React.FC = () => {
     const fetchMessages = async () => {
       try {
         const token = Cookies.get("authorization");
-        const response = await axios.get(
-          `${API_URL}/conversation/${conversationId}`,
-          {
-            withCredentials: true,
-            headers: { Authorization: token },
-          }
-        );
-        setMessages(response.data);
+        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
+          withCredentials: true,
+          headers: { Authorization: token },
+        });
+
+        if (response.data && response.data.length > 0) {
+          setMessages(response.data);
+        }
       } catch (error) {
         console.error(error);
-        toast.error("Не удалось загрузить сообщения");
+        toast.error("Не удалось загрузить сообщения с сервера");
       }
     };
 

@@ -15,7 +15,7 @@ type MessageType = {
 };
 
 const ChatComponent: React.FC = () => {
-  let { conversationId } = useParams();
+  const { conversationId } = useParams();
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,6 +36,7 @@ const ChatComponent: React.FC = () => {
         withCredentials: true,
         headers: { Authorization: token },
       });
+
       const botReply: MessageType = response.data;
       setMessages((prev) => [...prev, botReply]);
     } catch (error) {
@@ -49,20 +50,19 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  const sendMessage = () => {
-    if (message.trim()) {
-      setIsLoading(true);
+  const sendMessage = async () => {
+    if (!message.trim()) return;
 
-      const newMessage: MessageType = {
-        content: message.trim(),
-        role: "user",
-        conversationId: conversationId,
-      };
+    const newMessage: MessageType = {
+      content: message.trim(),
+      role: "user",
+      conversationId,
+    };
 
-      setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
+    setIsLoading(true);
 
-      sendMessageToServer(newMessage);
-    }
+    await sendMessageToServer(newMessage);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -73,24 +73,33 @@ const ChatComponent: React.FC = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchMessages = async () => {
       try {
         const token = Cookies.get("authorization");
         const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
           withCredentials: true,
           headers: { Authorization: token },
+          signal: controller.signal,
         });
 
-        if (response.data && response.data.length > 0) {
-          setMessages(response.data);
+        if (response.data?.length > 0) {
+          setMessages(response.data[0].messages);
         }
-      } catch (error) {
-        console.error(error);
-        toast.error("Не удалось загрузить сообщения с сервера");
+      } catch (error: any) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled:", error.message);
+        } else {
+          console.error(error);
+          toast.error("Не удалось загрузить сообщения с сервера");
+        }
       }
     };
 
     fetchMessages();
+
+    return () => controller.abort();
   }, [conversationId]);
 
   return (
@@ -112,7 +121,7 @@ const ChatComponent: React.FC = () => {
           >
             <div
               className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
-                msg.role === "user" ? "bg-gray-100" : ""
+                msg.role === "user" ? "bg-gray-100" : "bg-gray-200"
               }`}
             >
               {msg.content}
@@ -128,22 +137,20 @@ const ChatComponent: React.FC = () => {
         )}
       </div>
 
-      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl shadow-black-600 mb-5">
-        <div className="flex justify-between items-start">
-          <div>
-            <textarea
-              ref={textareaRef}
-              placeholder="Спросите что-нибудь..."
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-                handleInput();
-              }}
-              onKeyDown={handleKeyDown}
-              className="px-4 text-sm rounded-md resize-none focus:outline-none overflow-y-auto"
-              style={{ minHeight: "50px", maxHeight: "150px" }}
-            />
-          </div>
+      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl mb-5">
+        <div className="flex justify-between items-start gap-2">
+          <textarea
+            ref={textareaRef}
+            placeholder="Спросите что-нибудь..."
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              handleInput();
+            }}
+            onKeyDown={handleKeyDown}
+            className="px-4 text-sm w-full rounded-md resize-none focus:outline-none overflow-y-auto"
+            style={{ minHeight: "50px", maxHeight: "150px" }}
+          />
           <Button
             variant="ghost"
             onClick={sendMessage}

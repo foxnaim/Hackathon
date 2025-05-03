@@ -15,6 +15,8 @@ const Header: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editText, setEditText] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -93,6 +95,33 @@ const Header: React.FC = () => {
     } catch {
       toast.error("Ошибка при удалении чата");
     }
+    setOpenMenuIndex(null); // Закрытие выпадающего меню после удаления
+  };
+
+  const handleEditChat = (index: number) => {
+    setEditIndex(index);
+    setEditText(chats[index].name || ""); // Убедитесь, что значение корректно передаётся
+    setOpenMenuIndex(null); // Закрытие выпадающего меню
+  };
+
+  const saveEditChat = (index: number) => {
+    if (editText.trim() === "") {
+      // Если редактируемое имя пусто, вернуть его в исходное состояние
+      setEditText(chats[index].name || "Твой чат");
+      return;
+    }
+
+    const updatedChats = [...chats];
+    updatedChats[index].name = editText.trim(); // Обновляем имя чата
+    setChats(updatedChats); // Обновляем состояние с новыми данными
+    setEditIndex(null); // Закрыть режим редактирования
+    setOpenMenuIndex(null); // Закрыть меню
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === "Enter") {
+      saveEditChat(index); // Сохранение при нажатии Enter
+    }
   };
 
   const toggleUserMenu = () => {
@@ -122,7 +151,10 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-2 relative">
             {user && (
               <label className="relative cursor-pointer">
-                <div onClick={toggleUserMenu} className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-300">
+                <div
+                  onClick={toggleUserMenu}
+                  className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-300"
+                >
                   {loading ? (
                     <div className="animate-pulse w-full h-full bg-gray-300" />
                   ) : user.avatar ? (
@@ -139,7 +171,10 @@ const Header: React.FC = () => {
 
           {userMenu && (
             <div className="absolute right-6 top-20 border-2 border-gray-300 rounded-xl w-48 p-2">
-              <button onClick={handleLogout} className="w-full hover:bg-gray-200 text-start p-2 rounded-md flex justify-start items-center gap-1">
+              <button
+                onClick={handleLogout}
+                className="w-full hover:bg-gray-200 text-start p-2 rounded-md flex justify-start items-center gap-1"
+              >
                 <Icons.logout className="size-6 text-gray-700" />
                 Выйти
               </button>
@@ -168,7 +203,19 @@ const Header: React.FC = () => {
                   {chats.map((chat, index) => (
                     <li key={chat.id} className="relative">
                       <div className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
-                        <Link to={`/conversation/${chat.id}`} className="flex-1">{chat.name || ` Твой чат`}</Link>
+                        {editIndex === index ? (
+                          <input
+                            value={editText}
+                            onChange={(e) => setEditText(e.target.value)}
+                            onBlur={() => saveEditChat(index)}
+                            onKeyDown={(e) => handleKeyDown(e, index)} // Handle Enter key press
+                            className="flex-1 bg-transparent outline-none"
+                          />
+                        ) : (
+                          <Link to={`/conversation/${chat.id}`} className="flex-1">
+                            {chat.name || `Твой чат`}
+                          </Link>
+                        )}
                         <button onClick={() => handleChatMenuToggle(index)} className="ml-2">
                           <Icons.more className="w-5 h-5 text-gray-600" />
                         </button>
@@ -176,7 +223,7 @@ const Header: React.FC = () => {
                       {openMenuIndex === index && (
                         <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-52 z-10">
                           <button
-                            onClick={() => navigate(`/conversation/${chat.id}/edit`)}
+                            onClick={() => handleEditChat(index)}
                             className="flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-gray-200"
                           >
                             <Icons.edit className="w-5 h-5 text-gray-600" />
@@ -198,7 +245,10 @@ const Header: React.FC = () => {
               </div>
 
               <div className="p-4 border-t border-gray-300">
-                <button onClick={handleCreateChat} className="w-full bg-green-500 hover:bg-green-600 text-white rounded-md px-3 py-2 font-medium">
+                <button
+                  onClick={handleCreateChat}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white rounded-md px-3 py-2 font-medium"
+                >
                   + Новый чат
                 </button>
               </div>

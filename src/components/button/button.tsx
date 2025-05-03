@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   icon,
 }) => {
   const baseStyles =
-    "w-full flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
+    "flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
 
   const variants: Record<string, string> = {
     solid: "text-white disabled:bg-green-300 disabled:cursor-not-allowed",

@@ -10,10 +10,11 @@ import { useParams } from "react-router-dom";
 type MessageType = {
   content: string;
   role: "user" | "assistant";
+  conversationId?: string
 };
 
 const ChatComponent: React.FC = () => {
-  let { conversationId } = useParams();
+  let { conversationId } = useParams()
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,42 +28,17 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  /** Загружаем сообщения с сервера */
-  const fetchMessages = async () => {
-    if (!conversationId) return;
+  console.log(conversationId);  
 
-    try {
-      const token = Cookies.get("authorization");
-      const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
-        withCredentials: true,
-        headers: { Authorization: token },
-      });
-
-      setMessages(response.data.messages ?? []);
-    } catch (error) {
-      toast.error("Не удалось загрузить сообщения");
-      setMessages([]); // fallback
-    }
-  };
-
-  /** Отправляем сообщение на сервер */
   const sendMessageToServer = async (newMessage: MessageType) => {
     try {
       const token = Cookies.get("authorization");
-
-      const response = await axios.post(
-        `${API_URL}/message/`,
-        {
-          ...newMessage,
-          conversationId,
-        },
-        {
-          withCredentials: true,
-          headers: { Authorization: token },
-        }
-      );
-
-      setMessages((prev) => [...prev, response.data]);
+      const response = await axios.post(`${API_URL}/message`, newMessage, {
+        withCredentials: true,
+        headers: { Authorization: token },
+      });
+      const botReply: MessageType = response.data;
+      setMessages((prev) => [...prev, botReply]);
     } catch (error) {
       toast.error("Ошибка при отправке сообщения");
     } finally {
@@ -74,7 +50,6 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  /** Локально добавляем сообщение и отправляем его */
   const sendMessage = () => {
     if (message.trim()) {
       setIsLoading(true);
@@ -82,17 +57,14 @@ const ChatComponent: React.FC = () => {
       const newMessage: MessageType = {
         content: message.trim(),
         role: "user",
+        conversationId: conversationId
       };
 
-      // Локально добавляем сообщение
       setMessages((prev) => [...prev, newMessage]);
-
-      // Отправляем сообщение на сервер
       sendMessageToServer(newMessage);
     }
   };
 
-  /** Отправка по Enter */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -100,22 +72,51 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  
   useEffect(() => {
+    const fetchMessages = async () => {
+  
+      try {
+        const token = Cookies.get("authorization");
+        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
+          withCredentials: true,
+          headers: { Authorization: token },
+        });
+        setMessages(response.data);
+        console.log(messages);
+      } catch (error) {
+        console.error(error);
+        toast.error("Не удалось загрузить сообщения");
+      }
+    };
+  
     fetchMessages();
-  }, [conversationId]);
-
+  }, [conversationId]);  
+  
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-        {messages.map((msg, index) => (
-          <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap bg-gray-100`}>
+      <div
+        className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "#9CA3AF #E5E7EB",
+        }}
+      >
+        {messages.map((msg) => (
+          <div
+            
+            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+          >
+            <div
+              className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
+                msg.role === "user" ? "bg-gray-100" : ""
+              }`}
+            >
               {msg.content}
+              
             </div>
           </div>
         ))}
@@ -127,26 +128,28 @@ const ChatComponent: React.FC = () => {
         <div ref={bottomRef} />
       </div>
 
-      <div className="p-4 md:p-8 rounded-xl shadow-2xl shadow-pink-200 mb-5">
-        <div className="flex space-x-3">
-          <textarea
-            ref={textareaRef}
-            placeholder="Спросите что-нибудь..."
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-              handleInput();
-            }}
-            onKeyDown={handleKeyDown}
-            className="flex-1 px-4 text-sm p-2 w-full md:w-[700px] rounded-md resize-none focus:outline-none"
-            style={{ minHeight: "50px", maxHeight: "150px" }}
-          />
+      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-lg shadow-pink-200 mb-5">
+        <div className="flex justify-between items-start">
+          <div>
+            <textarea
+              ref={textareaRef}
+              placeholder="Спросите что-нибудь..."
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value);
+                handleInput();
+              }}
+              onKeyDown={handleKeyDown}
+              className=" px-4 text-sm rounded-md resize-none focus:outline-none overflow-y-auto"
+              style={{ minHeight: "50px", maxHeight: "150px" }}
+            />
+          </div>
           <Button
             variant="ghost"
             onClick={sendMessage}
             isLoading={isLoading}
             disabled={isLoading || !message.trim()}
-            className="flex w-10 h-10 bg-transparent p-3 rounded-md"
+            className="flex w-5 h-5 bg-transparent p-3 rounded-md"
           >
             <Icons.send className="w-6 h-6 text-gray-500" />
           </Button>

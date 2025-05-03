@@ -99,15 +99,15 @@ const Header: React.FC = () => {
     setUserMenu(!userMenu);
   };
 
+  const handleChatMenuToggle = (index: number) => {
+    setOpenMenuIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   const handleLogout = () => {
     Cookies.remove("authorization");
     setUser(null);
     navigate("/register");
     toast.info("Вы вышли из аккаунта");
-  };
-
-  const handleChatMenuToggle = (index: number) => {
-    setOpenMenuIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (
@@ -136,6 +136,7 @@ const Header: React.FC = () => {
               </label>
             )}
           </div>
+
           {userMenu && (
             <div className="absolute right-6 top-20 border-2 border-gray-300 rounded-xl w-48 p-2">
               <button onClick={handleLogout} className="w-full hover:bg-gray-200 text-start p-2 rounded-md flex justify-start items-center gap-1">
@@ -176,16 +177,18 @@ const Header: React.FC = () => {
                         <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-36 z-10">
                           <button
                             onClick={() => navigate(`/conversation/${chat.id}/edit`)}
-                            className="block w-full text-left px-3 py-2 hover:bg-gray-200"
+                            className="flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-gray-200"
                           >
-                             Редактировать
+                            <Icons.edit className="w-5 h-5 text-gray-600" />
+                            <span>Редактировать</span>
                           </button>
-                          <div className="border"/>
+                          <div className="border-t" />
                           <button
                             onClick={() => handleDeleteChat(chat.id)}
-                            className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-200"
+                            className="flex items-center gap-2 w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
                           >
-                             Удалить
+                            <Icons.delete className="w-5 h-5 text-red-600" />
+                            <span>Удалить</span>
                           </button>
                         </div>
                       )}

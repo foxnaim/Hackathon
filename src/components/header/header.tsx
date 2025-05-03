@@ -213,7 +213,7 @@ const Header: React.FC = () => {
                           />
                         ) : (
                           <Link to={`/conversation/${chat.id}`} className="flex-1">
-                            {chat.name || `Твой чат`}
+                            {chat.name || "Без названия"} 
                           </Link>
                         )}
                         <button onClick={() => handleChatMenuToggle(index)} className="ml-2">

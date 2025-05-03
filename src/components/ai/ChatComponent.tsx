@@ -52,15 +52,12 @@ const ChatComponent: React.FC = () => {
   const sendMessage = () => {
     if (message.trim()) {
       setIsLoading(true);
-
       const newMessage: MessageType = {
         content: message.trim(),
         role: "user",
         conversationId: conversationId,
       };
-
       setMessages((prev) => [...prev, newMessage]);
-
       sendMessageToServer(newMessage);
     }
   };
@@ -76,17 +73,17 @@ const ChatComponent: React.FC = () => {
     const fetchMessages = async () => {
       try {
         const token = Cookies.get("authorization");
-        const response = await axios.get(`${API_URL}/conversation/${conversationId}`, {
-          withCredentials: true,
-          headers: { Authorization: token },
-        });
-
-        if (response.data && response.data.length > 0) {
-          setMessages(response.data);
-        }
+        const response = await axios.get(
+          `${API_URL}/conversation/${conversationId}`,
+          {
+            withCredentials: true,
+            headers: { Authorization: token },
+          }
+        );
+        setMessages(response.data);
       } catch (error) {
         console.error(error);
-        toast.error("Не удалось загрузить сообщения с сервера");
+        toast.error("Не удалось загрузить сообщения");
       }
     };
 
@@ -128,9 +125,10 @@ const ChatComponent: React.FC = () => {
         )}
       </div>
 
-      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl shadow-black-600 mb-5">
+      {/* Нижняя панель с полем и кнопкой */}
+      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl shadow-black-300 mb-5">
         <div className="flex justify-between items-start">
-          <div>
+          <div className="flex-1 mr-2">
             <textarea
               ref={textareaRef}
               placeholder="Спросите что-нибудь..."
@@ -140,7 +138,7 @@ const ChatComponent: React.FC = () => {
                 handleInput();
               }}
               onKeyDown={handleKeyDown}
-              className="px-4 text-sm rounded-md resize-none focus:outline-none overflow-y-auto"
+              className="px-4 text-sm w-full rounded-md resize-none focus:outline-none overflow-y-auto"
               style={{ minHeight: "50px", maxHeight: "150px" }}
             />
           </div>

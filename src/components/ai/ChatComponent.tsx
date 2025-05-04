@@ -106,11 +106,7 @@ const ChatComponent: React.FC = () => {
     <div className="flex flex-col h-screen">
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-        style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "#9CA3AF #E5E7EB",
-        }}
+        className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-hide"
       >
         {messages.map((msg, index) => (
           <div
@@ -120,7 +116,7 @@ const ChatComponent: React.FC = () => {
             }`}
           >
             <div
-              className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap ${
+              className={`p-3 rounded-lg max-w-lg whitespace-pre-wrap break-words ${
                 msg.role === "user" ? "bg-gray-100" : "bg-gray-200"
               }`}
             >
@@ -148,7 +144,7 @@ const ChatComponent: React.FC = () => {
               handleInput();
             }}
             onKeyDown={handleKeyDown}
-            className="px-4 text-sm w-full rounded-md resize-none focus:outline-none overflow-y-auto"
+            className="px-4 text-sm w-full rounded-md resize-none focus:outline-none"
             style={{ minHeight: "50px", maxHeight: "150px" }}
           />
           <Button

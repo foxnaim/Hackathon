@@ -1,6 +1,6 @@
 const HeaderInfo = () => {
   return (
-    <header className="w-full px-10 my-5 h-16">
+    <header className="w-full  my-5 h-16">
       <div className="px-5 h-16 rounded-xl flex justify-between items-center shadow-2xl">
         <span className="text-3xl font-semibold">Nexora AI</span>
         <nav>

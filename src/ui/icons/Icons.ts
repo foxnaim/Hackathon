@@ -7,6 +7,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { IoIosArrowForward, IoIosLogOut } from "react-icons/io";
 import { MdOutlineMoreVert, MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
+import { CiLogin } from "react-icons/ci";
 
 
 export const Icons = {
@@ -29,4 +30,5 @@ export const Icons = {
   more: MdOutlineMoreVert,
   delete: MdDelete,
   edit: CiEdit,
+  login: CiLogin,
 };

@@ -34,10 +34,16 @@ const Home = () => {
         </section>
         <div className="border-2 mt-80" />
         <section>
-          <span id="about-us">
-              Что такое Nexora AI?
-          </span>
-        </section>
+  <span id="about-us" className='flex justify-center mt-5 text-2xl'>
+    Что такое Nexora AI?
+  </span>
+  <div className='mt-5 w-full md:w-2/5 mx-auto text-center'>
+    <p>
+      Nexora AI — это ваш интеллектуальный помощник для поиска и запуска стартапов. Мы анализируем огромные массивы данных, чтобы выявлять тренды, пробелы и перспективные ниши на рынке. Наша цель — помочь вам запускать бизнесы быстрее, точнее и с меньшими рисками.
+    </p>
+  </div>
+</section>
+
       </main>
     </div>
   );

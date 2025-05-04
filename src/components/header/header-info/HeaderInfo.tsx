@@ -22,7 +22,12 @@ const HeaderInfo = () => {
   }, [menuOpen]);
 
   return (
-    <header className="w-full my-5 h-16 relative">
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full my-5 h-16 relative"
+    >
       <div className="px-5 h-16 rounded-xl flex justify-between items-center shadow-2xl">
         <span className="text-3xl font-semibold">Nexora AI</span>
         <button
@@ -58,7 +63,7 @@ const HeaderInfo = () => {
               <ul className="space-y-3 text-gray-600">
                 <li>
                   <a
-                    href="/about-us"
+                    href="#about-us"
                     className="block hover:text-green-600"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -88,7 +93,7 @@ const HeaderInfo = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 

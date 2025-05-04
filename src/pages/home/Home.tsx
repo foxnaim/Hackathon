@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import HeaderInfo from "../../components/header/header-info/HeaderInfo";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/footer/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -99,6 +99,24 @@ const Home = () => {
             </ul>
           </div>
         </section>
+        <div className="border-2 mt-80" />
+        <section>
+        <span
+            id="how-to-use"
+            className="flex justify-center mt-5 text-2xl font-bold"
+          >
+            Что такое Nexora AI?
+          </span>
+          <div>
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+          </div>
+        </section>
+        <Footer/>
       </main>
     </div>
   );

@@ -1,12 +1,12 @@
+import HeaderInfo from "../../components/header/header-info/HeaderInfo"
 
 const Home = () => {
 
 
 
   return (
-    <div className="">
-      
-
+    <div>
+      <HeaderInfo/>
     </div>
   )
 }

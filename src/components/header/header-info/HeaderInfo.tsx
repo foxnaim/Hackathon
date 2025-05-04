@@ -1,10 +1,11 @@
 import React from 'react'
 
-type Props = {}
 
-const HeaderInfo = (props: Props) => {
+const HeaderInfo = () => {
   return (
-    <div>HeaderInfo</div>
+    <header className='w-full '>
+     <span>Nexora AI</span>
+    </header>
   )
 }
 

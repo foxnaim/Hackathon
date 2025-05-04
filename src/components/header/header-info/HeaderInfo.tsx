@@ -32,7 +32,7 @@ const HeaderInfo = () => {
         >
           <Icons.menu className="text-xl" />
         </button>
-        <nav className="hidden md:flex space-x-6 text-gray-600">
+        <nav className="hidden md:flex space-x-6 text-gray-600 ">
           <a href="#about-us" className="hover:text-green-600">
             О нас
           </a>
@@ -52,7 +52,7 @@ const HeaderInfo = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white p-5 shadow-lg absolute top-16 left-0 w-full z-10"
+            className="md:hidden bg-white p-5 shadow-lg absolute top-20 rounded-xl left-0 w-full z-10"
           >
             <nav>
               <ul className="space-y-3 text-gray-600">

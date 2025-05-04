@@ -73,6 +73,31 @@ const Home = () => {
               поведении аудитории, трендах покупок и медиа.
             </li>
           </ol>
+          <span className="flex font-bold mt-10 text-xl mb-5 justify-end">
+            Почему это полезно?
+          </span>
+          <div>
+            <ul className="list-disc list-inside text-lg w-full md:w-2/3 lg:w-1/3 space-y-3 mt-5 leading-relaxed text-left ml-auto">
+              <li>
+                <span className="font-semibold">Экономия времени:</span> вам не
+                нужно вручную исследовать рынок — ИИ делает это за вас.
+              </li>
+              <li>
+                <span className="font-semibold">Снижение рисков:</span> вы
+                запускаете стартап, опираясь на данные, а не на догадки.
+              </li>
+              <li>
+                <span className="font-semibold">Быстрый старт:</span> получаете
+                конкретные рекомендации и прогнозы, готовые к действию.
+              </li>
+              <li>
+                <span className="font-semibold">
+                  Преимущество над конкурентами:
+                </span>{" "}
+                узнаёте о трендах раньше других.
+              </li>
+            </ul>
+          </div>
         </section>
       </main>
     </div>

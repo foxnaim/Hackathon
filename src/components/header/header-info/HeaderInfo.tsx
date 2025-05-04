@@ -10,7 +10,7 @@ const HeaderInfo = () => {
                 href="#about-us"
                 className="transition-colors duration-300 hover:text-green-600"
               >
-                About Us
+                О нас
               </a>
             </li>
             <li>
@@ -18,7 +18,7 @@ const HeaderInfo = () => {
                 href="#how-to-use"
                 className="transition-colors duration-300 hover:text-green-600"
               >
-                How to use
+               Как использовать
               </a>
             </li>
             <li>
@@ -26,7 +26,7 @@ const HeaderInfo = () => {
                 href="#problem-solving"
                 className="transition-colors duration-300 hover:text-green-600"
               >
-                Problem solving
+               Решение проблем
               </a>
             </li>
           </ul>

@@ -1,6 +1,10 @@
 import HeaderInfo from "../../components/header/header-info/HeaderInfo";
+import { useNavigate } from 'react-router-dom';
+
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="px-10">
       <HeaderInfo />
@@ -19,6 +23,7 @@ const Home = () => {
             <button
               type="button"
               className="bg-green-200 hover:bg-green-300 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200"
+              onClick={() => navigate('/register')}
             >
               Присоединиться
             </button>

@@ -58,7 +58,7 @@ const HeaderInfo = () => {
               <ul className="space-y-3 text-gray-600">
                 <li>
                   <a
-                    href="#about-us"
+                    href="/about-us"
                     className="block hover:text-green-600"
                     onClick={() => setMenuOpen(false)}
                   >

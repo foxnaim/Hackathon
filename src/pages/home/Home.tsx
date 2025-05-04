@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import HeaderInfo from "../../components/header/header-info/HeaderInfo";
 import { useNavigate } from 'react-router-dom';
-
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,6 +31,12 @@ const Home = () => {
           <aside className="md:w-1/2 mt-10 md:mt-0 flex justify-center items-center">
            ХЪиолриолри
           </aside>
+        </section>
+        <div className="border-2 mt-80" />
+        <section>
+          <span id="about-us">
+              Что такое Nexora AI?
+          </span>
         </section>
       </main>
     </div>

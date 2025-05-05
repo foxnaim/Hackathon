@@ -44,9 +44,6 @@ const HeaderInfo = () => {
           <a href="#how-to-use" className="hover:text-green-600">
             Как использовать
           </a>
-          <a href="#problem-solving" className="hover:text-green-600">
-            Решение проблем
-          </a>
         </nav>
       </div>
       <AnimatePresence>
@@ -77,15 +74,6 @@ const HeaderInfo = () => {
                     onClick={() => setMenuOpen(false)}
                   >
                     Как использовать
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#problem-solving"
-                    className="block hover:text-green-600"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Решение проблем
                   </a>
                 </li>
               </ul>

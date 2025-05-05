@@ -56,22 +56,21 @@ const Home = () => {
           transition={{ duration: 1 }}
           className="border-2 mt-32 md:mt-80"
         />
-
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-10 md:space-y-16"
+          className="space-y-6 md:space-y-10"
         >
           <span
             id="about-us"
-            className="flex justify-center mt-5 text-2xl md:text-3xl font-bold"
+            className="flex justify-center mt-3 text-xl md:text-2xl font-bold"
           >
             Что такое Nexora AI?
           </span>
-          <div className="mt-5 w-full md:w-2/3 lg:w-1/2 mx-auto text-center">
-            <p>
+          <div className="mt-4 w-full md:w-2/3 lg:w-1/2 mx-auto text-center">
+            <p className="text-base md:text-lg">
               Nexora AI — это ваш интеллектуальный помощник для поиска и запуска
               стартапов. Мы анализируем огромные массивы данных, чтобы выявлять
               тренды, пробелы и перспективные ниши на рынке. Наша цель — помочь
@@ -80,7 +79,7 @@ const Home = () => {
           </div>
 
           <motion.span
-            className="flex font-bold mt-10 text-xl md:text-2xl mb-5"
+            className="flex font-bold mt-8 text-lg md:text-xl mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -90,36 +89,36 @@ const Home = () => {
           </motion.span>
 
           <motion.ol
-  className="list-decimal list-inside text-lg md:text-xl w-full md:w-2/3 lg:w-1/3 space-y-3 mt-5 leading-relaxed text-left mx-auto md:mx-0"
-  initial={{ opacity: 0 }}
-  whileInView={{ opacity: 1 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.8 }}
->
-  <li>
-    <span className="font-semibold">Показывает,</span> какие ниши
-    активно растут и где сосредоточен высокий спрос.
-  </li>
-  <li>
-    <span className="font-semibold">Помогает избежать,</span>
-    перенасыщенных рынков, чтобы вы не тратили ресурсы зря.
-  </li>
-  <li>
-    <span className="font-semibold">Предлагает идеи,</span> продуктов
-    и услуг, основанные на анализе Big Data.
-  </li>
-  <li>
-    <span className="font-semibold">Автоматически формирует,</span>
-    отчёты с рекомендациями и прогнозами.
-  </li>
-  <li>
-    <span className="font-semibold">Дает доступ,</span> к инсайдам о
-    поведении аудитории, трендах покупок и медиа.
-  </li>
-</motion.ol>
+            className="list-decimal list-inside text-base md:text-lg w-full md:w-2/3 lg:w-1/3 space-y-3 mt-4 leading-relaxed text-left mx-auto md:mx-0"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <li>
+              <span className="font-semibold">Показывает,</span> какие ниши
+              активно растут и где сосредоточен высокий спрос.
+            </li>
+            <li>
+              <span className="font-semibold">Помогает избежать,</span>
+              перенасыщенных рынков, чтобы вы не тратили ресурсы зря.
+            </li>
+            <li>
+              <span className="font-semibold">Предлагает идеи,</span> продуктов
+              и услуг, основанные на анализе Big Data.
+            </li>
+            <li>
+              <span className="font-semibold">Автоматически формирует,</span>
+              отчёты с рекомендациями и прогнозами.
+            </li>
+            <li>
+              <span className="font-semibold">Дает доступ,</span> к инсайдам о
+              поведении аудитории, трендах покупок и медиа.
+            </li>
+          </motion.ol>
 
           <motion.span
-            className="flex font-bold mt-10 text-xl md:text-2xl mb-5 justify-end"
+            className="flex font-bold mt-8 text-lg md:text-xl mb-4 justify-end"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -134,7 +133,7 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <ul className="list-disc list-inside text-lg md:text-xl w-full md:w-2/3 lg:w-1/3 space-y-3 mt-5 leading-relaxed text-left ml-auto">
+            <ul className="list-disc list-inside text-base md:text-lg w-full md:w-2/3 lg:w-1/3 space-y-3 mt-4 leading-relaxed text-left ml-auto">
               <li>
                 <span className="font-semibold">Экономия времени:</span> вам не
                 нужно вручную исследовать рынок — ИИ делает это за вас.
@@ -215,10 +214,7 @@ const Home = () => {
               transition={{ duration: 0.6 }}
               className="w-full md:w-1/2"
             >
-              <ol
-                start={4}
-                className="list-decimal list-inside space-y-6"
-              >
+              <ol start={4} className="list-decimal list-inside space-y-6">
                 <li>
                   <strong>Изучите рекомендации</strong>
                   <p>

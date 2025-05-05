@@ -11,7 +11,7 @@ const Home = () => {
       <header className="fixed top-0 left-0 w-full z-50 px-5 md:px-10 backdrop-blur-md">
         <HeaderInfo />
       </header>
-      <main>
+      <main className="px-10">
         <section className="flex flex-col md:flex-row my-28 md:my-56">
           <motion.article
             initial={{ opacity: 0, x: -50 }}
@@ -32,7 +32,7 @@ const Home = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               type="button"
-              className="bg-green-200 hover:bg-green-300 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200"
+              className="bg-green-400 hover:bg-green-500 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200"
               onClick={() => navigate("/register")}
             >
               Присоединиться

@@ -28,7 +28,7 @@ const HeaderInfo = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full my-5 h-16 relative"
     >
-      <div className="px-5 h-16 rounded-xl flex justify-between items-center shadow-2xl">
+      <div className="px-5 h-16 rounded-xl flex justify-between items-center shadow-2xl border-b-4 border-gray-400">
         <span className="text-3xl font-semibold">Nexora AI</span>
         <button
           id="burger-button"

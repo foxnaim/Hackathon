@@ -32,7 +32,23 @@ const Login: React.FC = () => {
       if (data) {
         Cookies.set('authorization', `Bearer ${data}`, { expires: 7 })
         toast.success('Успешный вход!')
-        navigate('/Ai')
+
+        // ⬇ добавляем создание чата сразу после входа
+        const chatResponse = await axios.post(
+          `${API_URL}/conversation`,
+          {},
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${data}`,
+            },
+          }
+        )
+
+        const newChatId = chatResponse.data // предполагаем, что backend возвращает ID нового чата
+        toast.success('Новый чат создан!')
+
+        navigate(`/conversation/${newChatId}`)
       } else {
         throw new Error('Токен не получен')
       }
@@ -70,7 +86,7 @@ const Login: React.FC = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email" // Добавлен атрибут autocomplete для email
+              autoComplete="email"
             />
           </div>
           <div>
@@ -83,7 +99,7 @@ const Login: React.FC = () => {
               placeholder="Введите пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password" // Добавлен атрибут autocomplete для пароля
+              autoComplete="current-password"
             />
           </div>
           <Button

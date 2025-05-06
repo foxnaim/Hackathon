@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Cookies from 'js-cookie'
 import Input from '../../components/input/input'
@@ -17,6 +17,36 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const checkTokenAndRedirect = async () => {
+      const token = Cookies.get('authorization')?.replace('Bearer ', '')
+
+      if (token) {
+        try {
+          const chatResponse = await axios.post(
+            `${API_URL}/conversation`,
+            {},
+            {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+
+          const newChatId = chatResponse.data
+          toast.success('Вы уже вошли. Новый чат создан!')
+          navigate(`/conversation/${newChatId}`)
+        } catch (error: any) {
+          console.error('Ошибка при создании чата:', error)
+          toast.error('Не удалось создать чат автоматически')
+        }
+      }
+    }
+
+    checkTokenAndRedirect()
+  }, [navigate])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -33,7 +63,6 @@ const Login: React.FC = () => {
         Cookies.set('authorization', `Bearer ${data}`, { expires: 7 })
         toast.success('Успешный вход!')
 
-        // ⬇ добавляем создание чата сразу после входа
         const chatResponse = await axios.post(
           `${API_URL}/conversation`,
           {},
@@ -45,7 +74,7 @@ const Login: React.FC = () => {
           }
         )
 
-        const newChatId = chatResponse.data // предполагаем, что backend возвращает ID нового чата
+        const newChatId = chatResponse.data
         toast.success('Новый чат создан!')
 
         navigate(`/conversation/${newChatId}`)

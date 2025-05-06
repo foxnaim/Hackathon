@@ -1,11 +1,19 @@
+import { useState } from "react";
 import HeaderInfo from "../../components/header/header-info/HeaderInfo";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import { motion } from "framer-motion";
+import ModalForm from "../../ui/modal-form/ModalForm";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleSubmit = (data: { email: string; message: string }) => {
+  };
   return (
     <div className="px-5 md:px-10">
       <header className="fixed top-0 left-0 w-full z-50 px-5 md:px-10 backdrop-blur-md">
@@ -32,11 +40,13 @@ const Home = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               type="button"
-              className="bg-green-400 hover:bg-green-500 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200"
+              className="bg-green-400 hover:bg-green-500 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200 mb-4"
               onClick={() => navigate("/register")}
             >
               Присоединиться
             </motion.button>
+            
+          
           </motion.article>
 
           <motion.aside
@@ -207,6 +217,7 @@ const Home = () => {
                 </li>
               </ol>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -233,8 +244,40 @@ const Home = () => {
             </motion.div>
           </div>
         </motion.section>
+        <div className="border-2 mt-32 md:mt-80"/>
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center py-16"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+            Помогите нам стать лучше
+          </h2>
+          <p className="text-base md:text-lg mb-8 max-w-2xl mx-auto">
+            Мы постоянно работаем над улучшением Nexora AI. Ваши идеи и предложения 
+            помогут нам сделать сервис еще более полезным для предпринимателей. 
+            Поделитесь своими мыслями о том, как мы можем стать лучше.
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            type="button"
+             className="bg-green-400 hover:bg-green-500 py-2 px-6 rounded-lg border-2 border-gray-300 duration-200 mb-4"
+            onClick={handleModalOpen}
+          >
+            Оставить пожелания
+          </motion.button>
+        </motion.section>
         <Footer />
       </main>
+      <ModalForm
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onSubmit={handleSubmit}
+      
+      />
     </div>
   );
 };

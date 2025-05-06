@@ -44,6 +44,7 @@ const HeaderInfo = () => {
           <a href="#how-to-use" className="hover:text-green-600">
             Как использовать
           </a>
+          
         </nav>
       </div>
       <AnimatePresence>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Loading } from "./components/loading/Loading"; 
 import Home from "./pages/home/Home";
+import Ai from "./pages/ai/AiPages"
 import NotFound from "./pages/not-found/NotFound";
 import Trends from "./pages/analytics/Trends";
 import Login from "./pages/login/Login";
@@ -30,7 +31,7 @@ function App() {
             <Route path="/Trends" element={<Trends />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
-            <Route path="conversation/:conversationId" element={<Home/>}/>
+            <Route path="conversation/:conversationId" element={<Ai/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
       </div>

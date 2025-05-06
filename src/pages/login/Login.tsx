@@ -32,7 +32,7 @@ const Login: React.FC = () => {
       if (data) {
         Cookies.set('authorization', `Bearer ${data}`, { expires: 7 })
         toast.success('Успешный вход!')
-        navigate('/')
+        navigate('/Ai')
       } else {
         throw new Error('Токен не получен')
       }

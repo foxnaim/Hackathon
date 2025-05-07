@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "../../ui/icons/Icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../api/context";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -19,7 +19,9 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editText, setEditText] = useState<string>("");
   const [search, setSearch] = useState("");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const navigate = useNavigate();
+  const { conversationId } = useParams();
 
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", isOpen);
@@ -132,48 +134,101 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
       {/* Список чатов */}
       <div className="mb-2 text-xs font-bold text-gray-400 tracking-widest uppercase">Мои чаты</div>
       <ul className="space-y-2">
-          {chats.map((chat, index) => (
-            <li key={chat.id} className="relative">
-              <div className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-xl px-4 py-3">
-                {editIndex === index ? (
-                  <input
-                    value={editText}
-                    onChange={(e) => setEditText(e.target.value)}
-                    onBlur={() => saveEditChat(index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    className="flex-1 bg-transparent outline-none"
+        <AnimatePresence>
+          {chats.map((chat, index) => {
+            const isActive = conversationId === chat.id;
+            return (
+              <motion.li
+                key={chat.id}
+                className="relative group"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.18, type: "tween" }}
+              >
+                <motion.div
+                  className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-xl px-4 py-3 transition-colors duration-150 relative"
+                  whileHover={{ scale: 1.02, boxShadow: "0 2px 16px 0 rgba(34,211,238,0.08)" }}
+                  transition={{ type: "tween", duration: 0.18 }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {/* Side bar/line only on hover */}
+                  {hoveredIndex === index && (
+                    <motion.div
+                      className="absolute left-2 top-2 bottom-2 w-1 rounded-full"
+                      style={{
+                        background: "linear-gradient(180deg, #22d3ee 0%, #818cf8 100%)",
+                        boxShadow: "0 0 8px 2px #a5f3fc66",
+                      }}
+                      initial={{ opacity: 0, scaleY: 0.7 }}
+                      animate={{ opacity: 1, scaleY: 1 }}
+                      exit={{ opacity: 0, scaleY: 0.7 }}
+                      transition={{ duration: 0.18, type: 'tween' }}
+                    />
+                  )}
+                  {/* Glow effect on hover */}
+                  <motion.span
+                    className="absolute left-1 top-1/2 -translate-y-1/2 w-2 h-8 rounded-full pointer-events-none"
+                    style={{background: "radial-gradient(circle at 50% 50%, #a5f3fc 60%, transparent 100%)"}}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 0 }}
+                    whileHover={{ opacity: 1, scale: 1.1 }}
+                    transition={{ duration: 0.18, type: "tween" }}
                   />
-                ) : (
-                  <Link to={`/conversation/${chat.id}`} className="flex-1">
-                    {chat.name || "Без названия"} 
-                  </Link>
+                  {/* Dot if active */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.span
+                        className="mr-2 w-3 h-3 rounded-full bg-gradient-to-br from-cyan-400 to-blue-400 shadow-md"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        transition={{ duration: 0.18, type: "spring", stiffness: 300 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                  {editIndex === index ? (
+                    <input
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      onBlur={() => saveEditChat(index)}
+                      onKeyDown={(e) => handleKeyDown(e, index)}
+                      className="flex-1 bg-transparent outline-none"
+                    />
+                  ) : (
+                    <Link to={`/conversation/${chat.id}`} className="flex-1 flex items-center">
+                      {chat.name || "Без названия"}
+                    </Link>
+                  )}
+                  <button onClick={() => handleChatMenuToggle(index)} className="ml-2">
+                    <Icons.more className="w-5 h-5 text-gray-600" />
+                  </button>
+                </motion.div>
+                {openMenuIndex === index && (
+                  <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-52 z-10">
+                    <button
+                      onClick={() => handleEditChat(index)}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-gray-200"
+                    >
+                      <Icons.edit className="w-5 h-5 text-gray-600" />
+                      <span>Редактировать</span>
+                    </button>
+                    <div className="border-t" />
+                    <button
+                      onClick={() => handleDeleteChat(chat.id)}
+                      className="flex items-center gap-2 w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
+                    >
+                      <Icons.delete className="w-5 h-5 text-red-600" />
+                      <span>Удалить</span>
+                    </button>
+                  </div>
                 )}
-                <button onClick={() => handleChatMenuToggle(index)} className="ml-2">
-                  <Icons.more className="w-5 h-5 text-gray-600" />
-                </button>
-              </div>
-              {openMenuIndex === index && (
-                <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-md w-52 z-10">
-                  <button
-                    onClick={() => handleEditChat(index)}
-                    className="flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-gray-200"
-                  >
-                    <Icons.edit className="w-5 h-5 text-gray-600" />
-                    <span>Редактировать</span>
-                  </button>
-                  <div className="border-t" />
-                  <button
-                    onClick={() => handleDeleteChat(chat.id)}
-                    className="flex items-center gap-2 w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
-                  >
-                    <Icons.delete className="w-5 h-5 text-red-600" />
-                    <span>Удалить</span>
-                  </button>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+              </motion.li>
+            );
+          })}
+        </AnimatePresence>
+      </ul>
 
       {/* Кнопка + */}
       <div className="mt-auto flex justify-start mb-5">

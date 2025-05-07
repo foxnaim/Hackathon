@@ -182,11 +182,11 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
           whileHover="hover"
           animate="rest"
           variants={{
-            rest: { width: 48, backgroundColor: "#fff" },
-            hover: { width: 224, backgroundColor: "#fff" },
+            rest: { width: 48, backgroundColor: "#fff", boxShadow: "0 2px 8px 0 rgba(80,80,120,0.08)" },
+            hover: { width: 224, backgroundColor: "#fff", boxShadow: "0 4px 24px 0 rgba(80,80,120,0.16)" },
           }}
-          transition={{ type: "spring", duration: 0.4 }}
-          className="relative flex items-center rounded-xl overflow-hidden group transition-all border border-gray-200 shadow "
+          transition={{ type: "tween", duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+          className="relative flex items-center rounded-xl overflow-hidden group transition-all border border-gray-200 shadow"
           style={{ height: 48, minWidth: 48 }}
           onClick={handleCreateChat}
         >
@@ -194,9 +194,9 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
           <motion.div
             variants={{
               rest: { opacity: 0, scale: 0.8 },
-              hover: { opacity: 1, scale: 1.1 },
+              hover: { opacity: 1, scale: 1.18 },
             }}
-            transition={{ duration: 0.4, type: "spring" }}
+            transition={{ duration: 0.18, type: "tween", ease: [0.4, 0, 0.2, 1] }}
             className="absolute inset-0 rounded-xl pointer-events-none"
             style={{
               background: "radial-gradient(ellipse at 50% 80%, #e0e7ff 0%, transparent 80%)",
@@ -210,7 +210,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
               rest: { color: "#18181b", x: 0 },
               hover: { color: "#18181b", x: 0 },
             }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.12 }}
             style={{ width: 48, minWidth: 48, justifyContent: "center" }}
           >
             +
@@ -221,7 +221,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
               rest: { x: 20, opacity: 0, color: "#18181b" },
               hover: { x: 0, opacity: 1, color: "#18181b" },
             }}
-            transition={{ duration: 0.4, type: "spring" }}
+            transition={{ duration: 0.18, type: "tween", ease: [0.4, 0, 0.2, 1] }}
             className="z-10 text-base font-normal whitespace-nowrap pl-2"
             style={{ pointerEvents: "none" }}
           >

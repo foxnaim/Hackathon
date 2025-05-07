@@ -1,16 +1,34 @@
+import { useState } from "react";
 import Header from "../../components/header/header";
 import ChatComponent from "../../components/ai/ChatComponent";
+import Menu from "../../components/menu/Menu";
 
 const Home = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
   return (
-    <div className="flex flex-col h-screen">
-      <div className="sticky top-0 z-10 w-full">
-        <Header />
+    <div className="flex h-screen">
+      {/* Sidebar - hidden on mobile, visible on desktop */}
+      <div className="hidden md:block w-1/4 lg:w-1/5 border-r border-gray-200">
+        <Menu isOpen={true} onClose={() => {}} user={null} />
       </div>
-      <div className="flex flex-col h-full max-w-screen px-2 sm:px-4 md:px-8 lg:px-16 mx-auto w-full md:w-2/3">
-        <div className="flex-1 overflow-hidden -mt-16">
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col">
+        <div className="sticky top-0 z-10 w-full">
+          <Header onMenuClick={toggleMenu} />
+        </div>
+        
+        <div className="flex-1 overflow-hidden px-2 sm:px-4 md:px-8 lg:px-16">
           <ChatComponent />
         </div>
+      </div>
+
+      {/* Mobile menu overlay */}
+      <div className="md:hidden">
+        <Menu isOpen={isMenuOpen} onClose={toggleMenu} user={null} />
       </div>
     </div>
   );

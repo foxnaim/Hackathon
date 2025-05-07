@@ -134,7 +134,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
       <ul className="space-y-2">
           {chats.map((chat, index) => (
             <li key={chat.id} className="relative">
-              <div className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
+              <div className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-xl px-4 py-3">
                 {editIndex === index ? (
                   <input
                     value={editText}

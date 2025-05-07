@@ -133,7 +133,7 @@ const ChatComponent: React.FC = () => {
         )}
       </div>
 
-      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl mb-5">
+      <div className="p-8 border-2 border-gray-200 rounded-xl shadow-2xl mb-24">
         <div className="flex justify-between items-start gap-2">
           <textarea
             ref={textareaRef}

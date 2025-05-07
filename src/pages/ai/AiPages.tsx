@@ -26,10 +26,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Mobile menu overlay */}
-      <div className="md:hidden">
-        <Menu isOpen={isMenuOpen} onClose={toggleMenu} user={null} />
-      </div>
+  
     </div>
   );
 };

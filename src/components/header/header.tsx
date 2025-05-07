@@ -63,10 +63,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
       <ToastContainer position="top-right" autoClose={3000} />
       <header className="w-full h-16 bg-white shadow-sm shadow-gray-200 z-50">
         <div className="relative px-4 sm:px-6 h-full flex items-center justify-between">
-          <button onClick={toggleMenu} className="flex items-center">
-            <Icons.menu className="w-6 h-6 text-gray-600" />
-          </button>
-
+          <span className="text-3xl font-semibold">Nexora AI</span>
           <div className="flex items-center gap-2 relative">
             {user && (
               <label className="relative cursor-pointer">
@@ -101,7 +98,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           )}
         </div>
 
-        <Menu isOpen={isMenuOpen} onClose={toggleMenu} user={user} />
       </header>
     </>
   );

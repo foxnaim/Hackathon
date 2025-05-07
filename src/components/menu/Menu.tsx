@@ -176,10 +176,58 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
         </ul>
 
       {/* Кнопка + */}
-      <div className="mt-auto flex justify-start">
-        <button onClick={handleCreateChat} className="w-12 h-12 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 text-2xl text-gray-400">
-          +
-        </button>
+      <div className="mt-auto flex justify-start mb-5">
+        <motion.button
+          initial="rest"
+          whileHover="hover"
+          animate="rest"
+          variants={{
+            rest: { width: 48, backgroundColor: "#fff" },
+            hover: { width: 224, backgroundColor: "#fff" },
+          }}
+          transition={{ type: "spring", duration: 0.4 }}
+          className="relative flex items-center rounded-xl overflow-hidden group transition-all border border-gray-200 shadow "
+          style={{ height: 48, minWidth: 48 }}
+          onClick={handleCreateChat}
+        >
+          {/* Светящаяся подсветка */}
+          <motion.div
+            variants={{
+              rest: { opacity: 0, scale: 0.8 },
+              hover: { opacity: 1, scale: 1.1 },
+            }}
+            transition={{ duration: 0.4, type: "spring" }}
+            className="absolute inset-0 rounded-xl pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at 50% 80%, #e0e7ff 0%, transparent 80%)",
+              zIndex: 0,
+            }}
+          />
+          {/* Иконка */}
+          <motion.span
+            className="z-10 flex items-center justify-center text-2xl"
+            variants={{
+              rest: { color: "#18181b", x: 0 },
+              hover: { color: "#18181b", x: 0 },
+            }}
+            transition={{ duration: 0.2 }}
+            style={{ width: 48, minWidth: 48, justifyContent: "center" }}
+          >
+            +
+          </motion.span>
+          {/* Текст выезжает при ховере */}
+          <motion.span
+            variants={{
+              rest: { x: 20, opacity: 0, color: "#18181b" },
+              hover: { x: 0, opacity: 1, color: "#18181b" },
+            }}
+            transition={{ duration: 0.4, type: "spring" }}
+            className="z-10 text-base font-normal whitespace-nowrap pl-2"
+            style={{ pointerEvents: "none" }}
+          >
+            Создать чат
+          </motion.span>
+        </motion.button>
       </div>
     </div>
   );

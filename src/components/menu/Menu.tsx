@@ -111,7 +111,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
   );
 
   const menuContent = (
-    <div className="h-full flex flex-col bg-white rounded-2xl shadow-xl p-6 mx-2 my-4 md:my-6 md:mx-4 w-full max-w-xs min-w-[260px] text-gray-900">
+    <div className="h-full flex flex-col rounded-2xl shadow-xl p-6 my-4 md:my-6 w-full max-w-xs min-w-[260px] text-gray-900">
       {/* Логотип и название */}
       <div className="flex items-center gap-3 mb-8">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 shadow-md" />

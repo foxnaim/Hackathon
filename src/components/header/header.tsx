@@ -6,7 +6,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Menu from "../menu/Menu";
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -61,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
-      <header className="w-full h-16 bg-white shadow-sm shadow-gray-200 z-50">
+      <header className="w-full h-16 bg-gray-50 shadow-xl z-50">
         <div className="relative px-4 sm:px-6 h-full flex items-center justify-between">
           <span className="text-3xl font-semibold">Nexora AI</span>
           <div className="flex items-center gap-2 relative">

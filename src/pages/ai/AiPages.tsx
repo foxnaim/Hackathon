@@ -9,13 +9,11 @@ const Home = () => {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar - hidden on mobile, visible on desktop */}
+    <div className="flex h-screen overflow-hidden">
       <div className="hidden md:block w-1/4 lg:w-1/5 border-r border-gray-200">
         <Menu isOpen={true} onClose={() => {}} user={null} />
       </div>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col">
         <div className="sticky top-0 z-10 w-full">
           <Header onMenuClick={toggleMenu} />
@@ -26,7 +24,6 @@ const Home = () => {
         </div>
       </div>
 
-  
     </div>
   );
 };

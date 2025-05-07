@@ -6,6 +6,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -16,6 +17,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [user, setUser] = useState<{ username?: string; email?: string; avatar?: string | null } | null>(null);
   const [loading, setLoading] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -85,18 +88,86 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </div>
 
           {userMenu && (
-            <div className="absolute right-6 top-20 border-2 border-gray-300 rounded-xl w-48 p-2">
-              <button
-                onClick={handleLogout}
-                className="w-full hover:bg-gray-200 text-start p-2 rounded-md flex justify-start items-center gap-1"
-              >
-                <Icons.logout className="size-6 text-gray-700" />
-                Выйти
-              </button>
+            <div
+              className="absolute right-6 top-16 border-2 border-gray-300 w-48 p-2 flex flex-col items-center transition-all duration-300 rounded-xl bg-white"
+              style={{
+                background: isHovered
+                  ? "linear-gradient(180deg, transparent 95%, rgb(255, 0, 43) 100%)"
+                  : "",
+                borderRadius: "0 0 0.75rem 0.75rem",
+              }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <AnimatePresence>
+                {!logoutConfirm && (
+                  <motion.button
+                    key="logout"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.18 }}
+                    onClick={() => setLogoutConfirm(true)}
+                    className="w-full flex items-center gap-2 justify-start text-black text-start p-2 rounded-md font-medium relative group"
+                    style={{ overflow: "hidden" }}
+                    whileHover="hover"
+                  >
+                    <motion.div
+                      className="absolute left-0 right-0 bottom-0 h-1 pointer-events-none"
+                      variants={{
+                        hover: { opacity: 1 },
+                        initial: { opacity: 0 },
+                      }}
+                      initial="initial"
+                      animate="initial"
+                      transition={{ duration: 0.18 }}
+                      style={{
+                        background: "linear-gradient(180deg, transparent 0%, #f43f5e 100%)",
+                        borderRadius: "0 0 0.75rem 0.75rem",
+                      }}
+                    />
+                    <Icons.logout className="size-6 z-10" />
+                    <span className="z-10">Выйти</span>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+              <AnimatePresence>
+                {logoutConfirm && (
+                  <motion.div
+                    key="confirm"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.18 }}
+                    className="flex items-center gap-4 px-6 py-3 rounded-lg bg-transparent text-black border-none relative"
+                    style={{
+                      minWidth: 180,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div className="absolute left-0 right-0 bottom-0 h-1 pointer-events-none" />
+                    <button
+                      onClick={() => {
+                        setLogoutConfirm(false);
+                        handleLogout();
+                      }}
+                      className="flex items-center gap-1 text-black hover:text-green-400 transition"
+                    >
+                      <span>✓</span> Yes(Y)
+                    </button>
+                    <span className="text-gray-500">|</span>
+                    <button
+                      onClick={() => setLogoutConfirm(false)}
+                      className="flex items-center gap-1 text-black hover:text-red-400 transition"
+                    >
+                      <span>✗</span> No(n)
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
         </div>
-
       </header>
     </>
   );

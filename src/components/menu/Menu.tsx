@@ -18,6 +18,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editText, setEditText] = useState<string>("");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,7 +88,6 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
       setEditText(chats[index].name || "Твой чат");
       return;
     }
-
     const updatedChats = [...chats];
     updatedChats[index].name = editText.trim();
     setChats(updatedChats);
@@ -105,17 +105,33 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
     setOpenMenuIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  // Фильтрация чатов по поиску
+  const filteredChats = chats.filter(chat =>
+    chat.name?.toLowerCase().includes(search.toLowerCase())
+  );
+
   const menuContent = (
-    <div className="h-full flex flex-col">
-      <div className="flex justify-between items-center p-4 md:hidden">
-        <button onClick={onClose}>
-          <Icons.close className="w-7 h-7 text-gray-700" />
-        </button>
+    <div className="h-full flex flex-col bg-white rounded-2xl shadow-xl p-6 mx-2 my-4 md:my-6 md:mx-4 w-full max-w-xs min-w-[260px] text-gray-900">
+      {/* Логотип и название */}
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 shadow-md" />
+        <span className="text-2xl font-extrabold tracking-tight text-gray-900 select-none font-mono">Nexora AI</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4">
-        <h3 className="text-lg font-semibold mb-4">Чаты</h3>
-        <ul className="space-y-2">
+      {/* Поиск */}
+      <div className="bg-gray-100 rounded-2xl flex items-center px-4 py-3 mb-6">
+        <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input
+          className="bg-transparent outline-none w-full text-gray-900 placeholder-gray-400 text-base"
+          placeholder="Поиск..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+      </div>
+
+      {/* Список чатов */}
+      <div className="mb-2 text-xs font-bold text-gray-400 tracking-widest uppercase">Мои чаты</div>
+      <ul className="space-y-2">
           {chats.map((chat, index) => (
             <li key={chat.id} className="relative">
               <div className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-md px-3 py-2">
@@ -158,20 +174,17 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
             </li>
           ))}
         </ul>
-      </div>
 
-      <div className="p-4 border-t border-gray-300">
-        <button
-          onClick={handleCreateChat}
-          className="w-full bg-green-500 hover:bg-green-600 text-white rounded-md px-3 py-2 font-medium"
-        >
-          + Новый чат
+      {/* Кнопка + */}
+      <div className="mt-auto flex justify-start">
+        <button onClick={handleCreateChat} className="w-12 h-12 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 text-2xl text-gray-400">
+          +
         </button>
       </div>
     </div>
   );
 
-  // Для мобильной версии используем анимированное выдвижное меню
+  // Мобильная версия — выезжающее меню
   if (typeof window !== 'undefined' && window.innerWidth < 768) {
     return (
       <AnimatePresence>
@@ -190,7 +203,6 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose, user }) => {
     );
   }
 
-  // Для десктопной версии просто рендерим контент
   return menuContent;
 };
 

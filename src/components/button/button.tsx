@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ButtonProps } from "../../common.types";
 import { Icons } from "../../ui/icons/Icons";
 
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps & {
+  whileHover?: any;
+  whileTap?: any;
+}> = ({
   children,
   variant = "solid",
   isLoading = false,
@@ -11,6 +14,8 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   className = "",
   icon,
+  whileHover,
+  whileTap,
 }) => {
   const baseStyles =
     "flex justify-center items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all";
@@ -27,7 +32,8 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <motion.button
-      whileTap={{ scale: 0.96 }}
+      whileTap={{ scale: 0.96, ...whileTap }}
+      whileHover={whileHover}
       className={`${baseStyles} ${variants[variant]} ${loadingClass} ${className}`}
       onClick={onClick}
       disabled={disabled || isLoading}
